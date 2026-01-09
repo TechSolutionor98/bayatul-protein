@@ -116,40 +116,47 @@ const Footer = ({ className = "" }) => {
   return (
     <>
       {/* Desktop Footer - Hidden on mobile */}
-      <footer className={`hidden md:block text-white  ${className}`}>
-        <div className="w-full bg-[#1F1F39]">
-          <div className="max-w-[1440px] mx-auto pt-8 pb-9 px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16">
-            <div className={`grid ${columnCount === 6 ? 'grid-cols-6' : 'grid-cols-5'} gap-4 lg:gap-6 xl:gap-8`}>
-              {/* Column 1 - Newsletter Subscription */}
-              <div className="col-span-1 flex flex-col">
-                {/* Logo and Heading */}
-                <h3 className="text-lg lg:text-xl xl:text-2xl font-bold mb-3 lg:mb-4">
-                  <img src="/logo.png" alt="Logo" className="w-24 lg:w-28 xl:w-32" />
-                </h3>
-                {/* Text */}
-                <p className="text-xs lg:text-sm text-white mb-3 lg:mb-4">Subscribe to our newsletter</p>
+      <footer className={`hidden md:block ${className}`}>
+        {/* Main Footer Section with Theme Background */}
+        <div className="w-full bg-[#2377c1] relative overflow-hidden">
+          {/* Decorative Background Elements */}
+          <div className="absolute inset-0 opacity-5">
+            <div className="absolute top-0 right-0 w-96 h-96 bg-[#d9a82e] rounded-full filter blur-3xl"></div>
+            <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#e2edf4] rounded-full filter blur-3xl"></div>
+          </div>
 
-                {/* Form */}
-                <form className="mb-3 lg:mb-4 p-1 bg-white rounded-full w-full max-w-[280px]" onSubmit={handleNewsletterSubmit}>
-                  <div className="flex w-full">
-                    {/* Search Input Div */}
-                    <div className="flex-grow">
-                      <input
-                        type="email"
-                        placeholder="Your email"
-                        className="w-full pl-2 lg:pl-3 py-1.5 lg:py-2 xl:py-3 text-xs lg:text-sm bg-white placeholder-gray-400 rounded-full border-white text-black focus:outline-none focus:ring-0 focus:border-white"
-                        value={newsletterEmail}
-                        onChange={handleNewsletterInput}
-                        required
-                      />
-                    </div>
+          <div className="max-w-[1600px] mx-auto pt-12 pb-8 px-4 lg:px-8 relative z-10">
+            {/* First Row - Logo, Newsletter, Social Icons, Download App in one horizontal line */}
+            <div className="flex  flex-wrap items-start justify-between gap-8 mb-12 pb-8 border-b-2 border-white/30">
+              {/* Logo */}
+              {/* <div className="flex-shrink-0">
+                <img src="/logo.png" alt="Logo" className="w-28 lg:w-32 xl:w-36 filter drop-shadow-lg" />
+              </div> */}
 
-                    {/* Button Div */}
-                    <div>
-                      <button type="submit" className="h-full bg-lime-500 text-white rounded-full px-2 lg:px-3 xl:px-5 text-xs lg:text-sm whitespace-nowrap">
-                        Subscribe
-                      </button>
-                    </div>
+              {/* Newsletter Section */}
+              <div className="flex-1 min-w-[280px] max-w-[400px]">
+                <h4 className="text-sm lg:text-base font-bold mb-2 text-white">
+                  Stay Updated
+                </h4>
+                {/* <p className="text-xs lg:text-sm text-[#e2edf4] mb-3">Get exclusive deals & news</p> */}
+
+                {/* Form with Modern Design */}
+                <form onSubmit={handleNewsletterSubmit}>
+                  <div className="relative">
+                    <input
+                      type="email"
+                      placeholder="Enter your email"
+                      className="w-full px-4 py-3 text-xs lg:text-sm bg-white placeholder-gray-500 rounded-xl border-2 border-[#d9a82e] text-[#2377c1] focus:outline-none focus:border-[#d9a82e] focus:ring-2 focus:ring-[#d9a82e]/50 transition-all duration-300"
+                      value={newsletterEmail}
+                      onChange={handleNewsletterInput}
+                      required
+                    />
+                    <button 
+                      type="submit" 
+                      className="absolute right-2 top-1/2 -translate-y-1/2 bg-[#d9a82e] hover:bg-[#d9a82e]/90 text-white rounded-lg px-4 py-2 text-xs lg:text-sm font-semibold transition-all duration-300 shadow-lg"
+                    >
+                      Subscribe
+                    </button>
                   </div>
                 </form>
                 {showNewsletterModal && (
@@ -158,49 +165,65 @@ const Footer = ({ className = "" }) => {
                     onClose={() => setShowNewsletterModal(false)}
                   />
                 )}
+              </div>
+ 
 
-                {/* Social Icons */}
-                <div className="flex flex-wrap gap-2 lg:gap-3 pl-0 lg:pl-2">
-                  <a href="https://www.facebook.com/grabatozae/" target="_blank" className="text-white hover:text-lime-400">
+              <div className="flex-shrink-0 -ml-8 lg:-ml-12 mt-3">
+                <img src="/white (2).png" alt="Logo" className="w-32 lg:w-36 xl:w-40 filter drop-shadow-lg" />
+              </div>
+
+              {/* Social Icons */}
+              <div>
+                <h4 className="text-sm lg:text-base font-bold mb-3 text-white">Follow Us</h4>
+                <div className="flex flex-wrap gap-2 lg:gap-3">
+                  <a href="https://www.facebook.com/grabatozae/" target="_blank" className="w-9 h-9 lg:w-10 lg:h-10 rounded-lg bg-[#e2edf4]/20 backdrop-blur-sm border border-[#e2edf4]/30 flex items-center justify-center text-[#e2edf4] hover:text-white hover:border-white hover:bg-[#e2edf4]/30 transition-all duration-300 hover:scale-110">
                     <Facebook className="w-4 h-4 lg:w-5 lg:h-5" />
                   </a>
-                  <a href="https://x.com/GrabAtoz" target="_blank" className="text-white hover:text-lime-400 transition-colors duration-200 ease-in-out" aria-label="X (Twitter)">
+                  <a href="https://x.com/GrabAtoz" target="_blank" className="w-9 h-9 lg:w-10 lg:h-10 rounded-lg bg-[#e2edf4]/20 backdrop-blur-sm border border-[#e2edf4]/30 flex items-center justify-center text-[#e2edf4] hover:text-white hover:border-white hover:bg-[#e2edf4]/30 transition-all duration-300 hover:scale-110" aria-label="X (Twitter)">
                     <svg viewBox="0 0 24 24" className="w-4 h-4 lg:w-5 lg:h-5 fill-current" role="img">
                       <path d="M18.25 2h3.5l-7.66 8.73L24 22h-6.87l-5.02-6.58L6.3 22H2.8l8.2-9.34L0 2h7.04l4.54 6.02L18.25 2z" />
                     </svg>
                   </a>
-                  <a href="https://www.instagram.com/grabatoz/" target="_blank" className="text-white hover:text-lime-400">
+                  <a href="https://www.instagram.com/grabatoz/" target="_blank" className="w-9 h-9 lg:w-10 lg:h-10 rounded-lg bg-[#e2edf4]/20 backdrop-blur-sm border border-[#e2edf4]/30 flex items-center justify-center text-[#e2edf4] hover:text-white hover:border-white hover:bg-[#e2edf4]/30 transition-all duration-300 hover:scale-110">
                     <Instagram className="w-4 h-4 lg:w-5 lg:h-5" />
                   </a>
-                  <a href="https://www.linkedin.com/company/grabatozae" target="_blank" className="text-white hover:text-lime-400">
+                  <a href="https://www.linkedin.com/company/grabatozae" target="_blank" className="w-9 h-9 lg:w-10 lg:h-10 rounded-lg bg-[#e2edf4]/20 backdrop-blur-sm border border-[#e2edf4]/30 flex items-center justify-center text-[#e2edf4] hover:text-white hover:border-white hover:bg-[#e2edf4]/30 transition-all duration-300 hover:scale-110">
                     <Linkedin className="w-4 h-4 lg:w-5 lg:h-5" />
                   </a>
-                  <a href="https://www.pinterest.com/grabatoz/" target="_blank" className="text-white hover:text-lime-400">
+                  <a href="https://www.pinterest.com/grabatoz/" target="_blank" className="w-9 h-9 lg:w-10 lg:h-10 rounded-lg bg-[#e2edf4]/20 backdrop-blur-sm border border-[#e2edf4]/30 flex items-center justify-center text-[#e2edf4] hover:text-white hover:border-white hover:bg-[#e2edf4]/30 transition-all duration-300 hover:scale-110">
                     <FontAwesomeIcon icon={faPinterest} className="w-4 h-4 lg:w-5 lg:h-5" />
                   </a>
-                  <a href="https://www.tiktok.com/@grabatoz" target="_blank" className="text-white hover:text-lime-400">
+                  <a href="https://www.tiktok.com/@grabatoz" target="_blank" className="w-9 h-9 lg:w-10 lg:h-10 rounded-lg bg-[#e2edf4]/20 backdrop-blur-sm border border-[#e2edf4]/30 flex items-center justify-center text-[#e2edf4] hover:text-white hover:border-white hover:bg-[#e2edf4]/30 transition-all duration-300 hover:scale-110">
                     <FontAwesomeIcon icon={faTiktok} className="w-4 h-4 lg:w-5 lg:h-5" />
                   </a>
-                  <a href="https://www.youtube.com/@grabAtoZ" target="_blank" className="text-white hover:text-lime-400">
+                  <a href="https://www.youtube.com/@grabAtoZ" target="_blank" className="w-9 h-9 lg:w-10 lg:h-10 rounded-lg bg-[#e2edf4]/20 backdrop-blur-sm border border-[#e2edf4]/30 flex items-center justify-center text-[#e2edf4] hover:text-white hover:border-white hover:bg-[#e2edf4]/30 transition-all duration-300 hover:scale-110">
                     <FontAwesomeIcon icon={faYoutube} className="w-4 h-4 lg:w-5 lg:h-5" />
                   </a>
-
-
-                </div>
-
-                <div className="flex pt-4 lg:pt-6 xl:pt-7 px-0 lg:px-2 space-x-2">
-                  <img src="https://res.cloudinary.com/dyfhsu5v6/image/upload/v1757938965/google_pj1cxc.webp" alt="Google Play" className="rounded-lg h-8 lg:h-10 xl:h-12" />
                 </div>
               </div>
 
-              {/* Column 2 - Top Categories */}
-              <div className="col-span-1 flex flex-col ml-8 lg:ml-10 xl:ml-14 2xl:ml-16">
-                <h3 className="text-sm lg:text-base xl:text-lg 2xl:text-xl font-semibold mb-2 lg:mb-3 xl:mb-4">Top Categories</h3>
-                <ul className="space-y-1 lg:space-y-1.5 text-white text-[10px] lg:text-xs xl:text-sm">
+              {/* App Download */}
+              {/* <div>
+                <h4 className="text-xs lg:text-sm font-semibold mb-3 text-[#d9a82e]">Download App</h4>
+                <img src="https://res.cloudinary.com/dyfhsu5v6/image/upload/v1757938965/google_pj1cxc.webp" alt="Google Play" className="rounded-xl h-10 lg:h-12 hover:scale-105 transition-transform duration-300 cursor-pointer shadow-lg" />
+              </div> */}
+            </div>
+
+            {/* Second Row - 4 Columns: Top Categories, More Categories, Legal, Support */}
+            <div className="grid grid-cols-4 gap-6 lg:gap-8 xl:gap-10">
+              {/* Column 1 - Top Categories */}
+              <div className="col-span-1 flex flex-col">
+                <div className="mb-4 pb-2 border-b-2 border-[#d9a82e]">
+                  <h3 className="text-base lg:text-lg xl:text-xl font-bold text-white">Top Categories</h3>
+                </div>
+                <ul className="space-y-2 lg:space-y-2.5 text-white text-sm lg:text-base">
                   {categories.slice(0, 6).map((category) => (
                     <li key={category._id}>
-                      <Link to={generateShopURL({ parentCategory: category.name })} className="hover:text-lime-400">
-                        {category.name}
+                      <Link to={generateShopURL({ parentCategory: category.name })} className="hover:translate-x-1 inline-block transition-all duration-300 relative group">
+                        <span className="relative">
+                          {category.name}
+                          <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#d9a82e] group-hover:w-full transition-all duration-300"></span>
+                        </span>
                       </Link>
                     </li>
                   ))}
@@ -209,22 +232,30 @@ const Footer = ({ className = "" }) => {
                       <Link to={generateShopURL({
                         parentCategory: subCategory.category?.name || '',
                         subCategory: subCategory.name
-                      })} className="hover:text-lime-400">
-                        {subCategory.name}
+                      })} className="hover:translate-x-1 inline-block transition-all duration-300 relative group">
+                        <span className="relative">
+                          {subCategory.name}
+                          <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#d9a82e] group-hover:w-full transition-all duration-300"></span>
+                        </span>
                       </Link>
                     </li>
                   ))}
                 </ul>
               </div>
 
-              {/* Column 3 - More Categories */}
-              <div className="col-span-1 flex flex-col ml-8 lg:ml-10 xl:ml-14 2xl:ml-16">
-                <h3 className="text-sm lg:text-base xl:text-lg 2xl:text-xl font-semibold mb-2 lg:mb-3 xl:mb-4">More Categories</h3>
-                <ul className="space-y-1 lg:space-y-1.5 text-white text-[10px] lg:text-xs xl:text-sm">
+              {/* Column 2 - More Categories */}
+              <div className="col-span-1 flex flex-col">
+                <div className="mb-4 pb-2 border-b-2 border-[#d9a82e]">
+                  <h3 className="text-base lg:text-lg xl:text-xl font-bold text-white">More Categories</h3>
+                </div>
+                <ul className="space-y-2 lg:space-y-2.5 text-white text-sm lg:text-base">
                   {categories.slice(6, 10).map((category) => (
                     <li key={category._id}>
-                      <Link to={generateShopURL({ parentCategory: category.name })} className="hover:text-lime-400">
-                        {category.name}
+                      <Link to={generateShopURL({ parentCategory: category.name })} className="hover:translate-x-1 inline-block transition-all duration-300 relative group">
+                        <span className="relative">
+                          {category.name}
+                          <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#d9a82e] group-hover:w-full transition-all duration-300"></span>
+                        </span>
                       </Link>
                     </li>
                   ))}
@@ -233,152 +264,218 @@ const Footer = ({ className = "" }) => {
                       <Link to={generateShopURL({
                         parentCategory: subCategory.category?.name || '',
                         subCategory: subCategory.name
-                      })} className="hover:text-lime-400">
-                        {subCategory.name}
+                      })} className="hover:translate-x-1 inline-block transition-all duration-300 relative group">
+                        <span className="relative">
+                          {subCategory.name}
+                          <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#d9a82e] group-hover:w-full transition-all duration-300"></span>
+                        </span>
                       </Link>
                     </li>
                   ))}
                 </ul>
               </div>
 
-              {/* Column 4 - Support */}
-              <div className="col-span-1 flex flex-col ml-8 lg:ml-10 xl:ml-14 2xl:ml-16">
-                <h3 className="text-sm lg:text-base xl:text-lg 2xl:text-xl font-semibold mb-2 lg:mb-3 xl:mb-4">Legal</h3>
-                <ul className="space-y-1 lg:space-y-1.5 text-white text-[10px] lg:text-xs xl:text-sm">
+              {/* Column 3 - Legal */}
+              <div className="col-span-1 flex flex-col">
+                <div className="mb-4 pb-2 border-b-2 border-[#d9a82e]">
+                  <h3 className="text-base lg:text-lg xl:text-xl font-bold text-white">Legal</h3>
+                </div>
+                <ul className="space-y-2 lg:space-y-2.5 text-white text-sm lg:text-base">
                   <li>
-                    <Link to="/refund-return" className="hover:text-lime-400">
-                      Refund and Return
+                    <Link to="/refund-return" className="hover:translate-x-1 inline-block transition-all duration-300 relative group">
+                      <span className="relative">
+                        Refund and Return
+                        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#d9a82e] group-hover:w-full transition-all duration-300"></span>
+                      </span>
                     </Link>
                   </li>
                   <li>
-                    <Link to="/cookies-policy" className="hover:text-lime-400">
-                      Cookies Policy
+                    <Link to="/cookies-policy" className="hover:translate-x-1 inline-block transition-all duration-300 relative group">
+                      <span className="relative">
+                        Cookies Policy
+                        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#d9a82e] group-hover:w-full transition-all duration-300"></span>
+                      </span>
                     </Link>
                   </li>
                   <li>
-                    <Link to="/terms-conditions" className="hover:text-lime-400">
-                      Terms & Conditions
+                    <Link to="/terms-conditions" className="hover:translate-x-1 inline-block transition-all duration-300 relative group">
+                      <span className="relative">
+                        Terms & Conditions
+                        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#d9a82e] group-hover:w-full transition-all duration-300"></span>
+                      </span>
                     </Link>
                   </li>
                   <li>
-                    <Link to="/privacy-policy" className="hover:text-lime-400">
-                      Privacy Policy
+                    <Link to="/privacy-policy" className="hover:translate-x-1 inline-block transition-all duration-300 relative group">
+                      <span className="relative">
+                        Privacy Policy
+                        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#d9a82e] group-hover:w-full transition-all duration-300"></span>
+                      </span>
                     </Link>
                   </li>
                   <li>
-                    <Link to="/disclaimer-policy" className="hover:text-lime-400">
-                      Disclaimer Policy
+                    <Link to="/disclaimer-policy" className="hover:translate-x-1 inline-block transition-all duration-300 relative group">
+                      <span className="relative">
+                        Disclaimer Policy
+                        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#d9a82e] group-hover:w-full transition-all duration-300"></span>
+                      </span>
                     </Link>
                   </li>
                   <li>
-                    <Link to="/track-order" className="hover:text-lime-400">
-                      Track Order
-                    </Link>
-                  </li>
-
-                  <li>
-                    <Link to="/voucher-terms" className="hover:text-lime-400">
-                      Voucher Terms
+                    <Link to="/track-order" className="hover:translate-x-1 inline-block transition-all duration-300 relative group">
+                      <span className="relative">
+                        Track Order
+                        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#d9a82e] group-hover:w-full transition-all duration-300"></span>
+                      </span>
                     </Link>
                   </li>
                   <li>
-                    <Link to="/delivery-terms" className="hover:text-lime-400">
-                      Delivery Terms
+                    <Link to="/voucher-terms" className="hover:translate-x-1 inline-block transition-all duration-300 relative group">
+                      <span className="relative">
+                        Voucher Terms
+                        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#d9a82e] group-hover:w-full transition-all duration-300"></span>
+                      </span>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/delivery-terms" className="hover:translate-x-1 inline-block transition-all duration-300 relative group">
+                      <span className="relative">
+                        Delivery Terms
+                        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#d9a82e] group-hover:w-full transition-all duration-300"></span>
+                      </span>
                     </Link>
                   </li>
                 </ul>
               </div>
 
-              {/* Column 5 - Legal */}
-              <div className="col-span-1 flex flex-col ml-8 lg:ml-10 xl:ml-14 2xl:ml-16">
-                <h3 className="text-sm lg:text-base xl:text-lg 2xl:text-xl font-semibold mb-2 lg:mb-3 xl:mb-4">Support</h3>
-                <ul className="space-y-1 lg:space-y-1.5 text-white text-[10px] lg:text-xs xl:text-sm">
+              {/* Column 4 - Support */}
+              <div className="col-span-1 flex flex-col">
+                <div className="mb-4 pb-2 border-b-2 border-[#d9a82e]">
+                  <h3 className="text-base lg:text-lg xl:text-xl font-bold text-white">Support</h3>
+                </div>
+                <ul className="space-y-2 lg:space-y-2.5 text-white text-sm lg:text-base">
                   <li>
-                    <Link to="/about" className="hover:text-lime-400">
-                      About Us
+                    <Link to="/about" className="hover:translate-x-1 inline-block transition-all duration-300 relative group">
+                      <span className="relative">
+                        About Us
+                        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#d9a82e] group-hover:w-full transition-all duration-300"></span>
+                      </span>
                     </Link>
                   </li>
                   <li>
-                    <Link to="/contact" className="hover:text-lime-400">
-                      Contact Us
+                    <Link to="/contact" className="hover:translate-x-1 inline-block transition-all duration-300 relative group">
+                      <span className="relative">
+                        Contact Us
+                        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#d9a82e] group-hover:w-full transition-all duration-300"></span>
+                      </span>
                     </Link>
                   </li>
                   <li>
-                    <a href="https://blog.grabatoz.ae/" rel="noopener noreferrer" className="hover:text-lime-400">
-                      Blog
+                    <a href="https://blog.grabatoz.ae/" rel="noopener noreferrer" className="hover:translate-x-1 inline-block transition-all duration-300 relative group">
+                      <span className="relative">
+                        Blog
+                        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#d9a82e] group-hover:w-full transition-all duration-300"></span>
+                      </span>
                     </a>
                   </li>
                   <li>
-                    <Link to="/shop" className="hover:text-lime-400">
-                      Shop
+                    <Link to="/shop" className="hover:translate-x-1 inline-block transition-all duration-300 relative group">
+                      <span className="relative">
+                        Shop
+                        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#d9a82e] group-hover:w-full transition-all duration-300"></span>
+                      </span>
                     </Link>
                   </li>
                   <li>
-                    <Link to="/login" className="hover:text-lime-400">
-                      Login
+                    <Link to="/login" className="hover:translate-x-1 inline-block transition-all duration-300 relative group">
+                      <span className="relative">
+                        Login
+                        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#d9a82e] group-hover:w-full transition-all duration-300"></span>
+                      </span>
                     </Link>
                   </li>
                   <li>
-                    <Link to="/register" className="hover:text-lime-400">
-                      Register
+                    <Link to="/register" className="hover:translate-x-1 inline-block transition-all duration-300 relative group">
+                      <span className="relative">
+                        Register
+                        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#d9a82e] group-hover:w-full transition-all duration-300"></span>
+                      </span>
                     </Link>
                   </li>
                   <li>
-                    <Link to="/wishlist" className="hover:text-lime-400">
-                      Wishlist
+                    <Link to="/wishlist" className="hover:translate-x-1 inline-block transition-all duration-300 relative group">
+                      <span className="relative">
+                        Wishlist
+                        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#d9a82e] group-hover:w-full transition-all duration-300"></span>
+                      </span>
                     </Link>
                   </li>
                   <li>
-                    <Link to="/cart" className="hover:text-lime-400 font-semibold">
-                      Cart
+                    <Link to="/cart" className="hover:translate-x-1 inline-block transition-all duration-300  relative group">
+                      <span className="relative">
+                        Cart
+                        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#d9a82e] group-hover:w-full transition-all duration-300"></span>
+                      </span>
                     </Link>
                   </li>
                 </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Desktop Bottom Footer with Modern Design */}
+        <div className="bg-white border-t border-blue-600">
+          <div className="max-w-[1600px] mx-auto px-4 lg:px-8 py-4 lg:py-5">
+            <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+              {/* Copyright */}
+              <div className="flex-1 text-center md:text-left">
+                <p className="text-sm lg:text-base text-gray-800 font-medium">
+                  © 2025 <span className="text-[#d9a82e] font-bold">Baytal-Protien</span>
+                </p>
+              </div>
+
+              {/* Payment Methods */}
+              <div className="flex-1 flex justify-center">
+                <img src="/1.svg" alt="Payment Methods" className="h-8 lg:h-10 w-auto object-contain opacity-90 hover:opacity-100 transition-opacity duration-300" />
+              </div>
+
+              {/* Developer Credit */}
+              <div className="flex-1 text-center md:text-right">
+                <p className="text-sm lg:text-base text-gray-800 font-medium">
+                  Developed By <span className="text-[#d9a82e] font-bold hover:text-[#d9a82e] transition-colors duration-300">
+                    <a href="https://techsolutionor.com" target="_blank" rel="noopener noreferrer">Tech Solutionor</a>
+                  </span>
+                </p>
               </div>
             </div>
           </div>
         </div>
       </footer>
 
-      {/* Desktop Bottom Footer */}
-      <section className="hidden md:block">
-        <div className="max-w-[1440px] mx-auto flex flex-row justify-between items-center gap-3 lg:gap-6 xl:gap-8 px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 py-2 lg:py-3">
-          {/* 1st Column: Text */}
-          <div className="flex-1 min-w-0">
-            <p className="text-[10px] lg:text-xs xl:text-sm font-bold whitespace-nowrap"> 2025 Grabatoz Powered By Crown Excel</p>
-          </div>
-
-          {/* 2nd Column: Image */}
-          <div className="flex-1 flex justify-center min-w-0">
-            <img src="/1.svg" alt="Payment Methods" className="rounded-lg h-6 lg:h-8 xl:h-10 w-auto object-contain" />
-          </div>
-
-          {/* 3rd Column: App Store Images */}
-          <div className="flex-1 flex justify-end items-center min-w-0">
-            <div className="flex items-center">
-              <p className="text-[10px] lg:text-xs xl:text-sm font-bold whitespace-nowrap">Developed By <span className="text-lime-500"><a href="https://techsolutionor.com" target="_blank" rel="noopener noreferrer">Tech Solutionor</a></span></p>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Mobile Footer - Only visible on mobile */}
-      <footer className="md:hidden bg-white">
+      <footer className="md:hidden bg-[#2377c1]">
         {/* Categories Section */}
-        <div className="border-b border-gray-200">
+        <div className="border-b border-white/30">
           <button
             onClick={() => toggleSection("categories")}
-            className="w-full flex justify-between items-center p-4 text-left"
+            className="w-full flex justify-between items-center p-4 text-left group"
           >
-            <span className="text-lg font-semibold text-gray-900">Categories</span>
-            {openSections.categories ? <Minus size={20} /> : <Plus size={20} />}
+            <span className="text-base font-bold text-white">Categories</span>
+            <div className={`transform transition-transform duration-300 ${openSections.categories ? 'rotate-180' : ''}`}>
+              {openSections.categories ? 
+                <Minus size={20} className="text-white" /> : 
+                <Plus size={20} className="text-white" />
+              }
+            </div>
           </button>
           {openSections.categories && (
-            <div className="px-4 pb-4">
+            <div className="px-4 pb-4 animate-fadeIn">
               <ul className="space-y-3">
                 {categories.map((category) => (
                   <li key={category._id}>
-                    <Link to={`/shop?parentCategory=${category._id}`} className="text-gray-700 hover:text-orange-500">
+                    <Link to={`/shop?parentCategory=${category._id}`} className="text-white hover:text-[#d9a82e] transition-colors duration-300 text-sm flex items-center group">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#d9a82e] mr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
                       {category.name}
                     </Link>
                   </li>
@@ -389,44 +486,55 @@ const Footer = ({ className = "" }) => {
         </div>
 
         {/* Legal Section */}
-        <div className="border-b border-gray-200">
+        <div className="border-b border-white/30">
           <button
             onClick={() => toggleSection("legal")}
             className="w-full flex justify-between items-center p-4 text-left"
           >
-            <span className="text-lg font-semibold text-gray-900">Legal</span>
-            {openSections.legal ? <Minus size={20} /> : <Plus size={20} />}
+            <span className="text-base font-bold text-white">Legal</span>
+            <div className={`transform transition-transform duration-300 ${openSections.legal ? 'rotate-180' : ''}`}>
+              {openSections.legal ? 
+                <Minus size={20} className="text-white" /> : 
+                <Plus size={20} className="text-white" />
+              }
+            </div>
           </button>
           {openSections.legal && (
-            <div className="px-4 pb-4">
+            <div className="px-4 pb-4 animate-fadeIn">
               <ul className="space-y-3">
                 <li>
-                  <Link to="/about" className="text-gray-700 hover:text-orange-500">
+                  <Link to="/about" className="text-white hover:text-[#d9a82e] transition-colors duration-300 text-sm flex items-center group">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#d9a82e] mr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
                     About Us
                   </Link>
                 </li>
                 <li>
-                  <Link to="/contact" className="text-gray-700 hover:text-orange-500">
+                  <Link to="/contact" className="text-white hover:text-[#d9a82e] transition-colors duration-300 text-sm flex items-center group">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#d9a82e] mr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
                     Contact Us
                   </Link>
                 </li>
                 <li>
-                  <a href="https://blog.grabatoz.ae/" rel="noopener noreferrer" className="text-gray-700 hover:text-orange-500">
+                  <a href="https://blog.grabatoz.ae/" rel="noopener noreferrer" className="text-white hover:text-[#d9a82e] transition-colors duration-300 text-sm flex items-center group">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#d9a82e] mr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
                     Blog
                   </a>
                 </li>
                 <li>
-                  <Link to="/shop" className="text-gray-700 hover:text-orange-500">
+                  <Link to="/shop" className="text-white hover:text-[#d9a82e] transition-colors duration-300 text-sm flex items-center group">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#d9a82e] mr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
                     Shop
                   </Link>
                 </li>
                 <li>
-                  <Link to="/login" className="text-gray-700 hover:text-orange-500">
+                  <Link to="/login" className="text-white hover:text-[#d9a82e] transition-colors duration-300 text-sm flex items-center group">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#d9a82e] mr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
                     Login
                   </Link>
                 </li>
                 <li>
-                  <Link to="/register" className="text-gray-700 hover:text-orange-500">
+                  <Link to="/register" className="text-white hover:text-[#d9a82e] transition-colors duration-300 text-sm flex items-center group">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#d9a82e] mr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
                     Register
                   </Link>
                 </li>
@@ -436,54 +544,67 @@ const Footer = ({ className = "" }) => {
         </div>
 
         {/* Support Section */}
-        <div className="border-b border-gray-200">
+        <div className="border-b border-white/30">
           <button
             onClick={() => toggleSection("support")}
             className="w-full flex justify-between items-center p-4 text-left"
           >
-            <span className="text-lg font-semibold text-gray-900">Support</span>
-            {openSections.support ? <Minus size={20} /> : <Plus size={20} />}
+            <span className="text-base font-bold text-white">Support</span>
+            <div className={`transform transition-transform duration-300 ${openSections.support ? 'rotate-180' : ''}`}>
+              {openSections.support ? 
+                <Minus size={20} className="text-white" /> : 
+                <Plus size={20} className="text-white" />
+              }
+            </div>
           </button>
           {openSections.support && (
-            <div className="px-4 pb-4">
+            <div className="px-4 pb-4 animate-fadeIn">
               <ul className="space-y-3">
                 <li>
-                  <Link to="/refund-return" className="text-gray-700 hover:text-orange-500">
+                  <Link to="/refund-return" className="text-white hover:text-[#d9a82e] transition-colors duration-300 text-sm flex items-center group">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#d9a82e] mr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
                     Refund and Return
                   </Link>
                 </li>
                 <li>
-                  <Link to="/cookies-policy" className="text-gray-700 hover:text-orange-500">
+                  <Link to="/cookies-policy" className="text-white hover:text-[#d9a82e] transition-colors duration-300 text-sm flex items-center group">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#d9a82e] mr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
                     Cookies Policy
                   </Link>
                 </li>
                 <li>
-                  <Link to="/terms-conditions" className="text-gray-700 hover:text-orange-500">
+                  <Link to="/terms-conditions" className="text-white hover:text-[#d9a82e] transition-colors duration-300 text-sm flex items-center group">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#d9a82e] mr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
                     Terms & Conditions
                   </Link>
                 </li>
                 <li>
-                  <Link to="/privacy-policy" className="text-gray-700 hover:text-orange-500">
+                  <Link to="/privacy-policy" className="text-white hover:text-[#d9a82e] transition-colors duration-300 text-sm flex items-center group">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#d9a82e] mr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
                     Privacy Policy
                   </Link>
                 </li>
                 <li>
-                  <Link to="/disclaimer-policy" className="text-gray-700 hover:text-orange-500">
+                  <Link to="/disclaimer-policy" className="text-white hover:text-[#d9a82e] transition-colors duration-300 text-sm flex items-center group">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#d9a82e] mr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
                     Disclaimer Policy
                   </Link>
                 </li>
                 <li>
-                  <Link to="/track-order" className="text-gray-700 hover:text-orange-500">
+                  <Link to="/track-order" className="text-white hover:text-[#d9a82e] transition-colors duration-300 text-sm flex items-center group">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#d9a82e] mr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
                     Track Order
                   </Link>
                 </li>
                 <li>
-                  <Link to="/wishlist" className="text-gray-700 hover:text-orange-500">
+                  <Link to="/wishlist" className="text-white hover:text-[#d9a82e] transition-colors duration-300 text-sm flex items-center group">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#d9a82e] mr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
                     Wishlist
                   </Link>
                 </li>
                 <li>
-                  <Link to="/cart" className="text-gray-700 hover:text-orange-500 font-semibold">
+                  <Link to="/cart" className="text-white hover:text-[#d9a82e] transition-colors duration-300 text-sm font-semibold flex items-center group">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#d9a82e] mr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
                     Cart
                   </Link>
                 </li>
@@ -493,96 +614,106 @@ const Footer = ({ className = "" }) => {
         </div>
 
         {/* Connect Section */}
-        <div className="border-b border-gray-200">
+        <div className="border-b border-[#d9a82e]/20">
           <button
             onClick={() => toggleSection("connect")}
             className="w-full flex justify-between items-center p-4 text-left"
           >
-            <span className="text-lg font-semibold text-gray-900">Connect</span>
-            {openSections.connect ? <Minus size={20} /> : <Plus size={20} />}
+            <span className="text-base font-bold text-white">Connect</span>
+            <div className={`transform transition-transform duration-300 ${openSections.connect ? 'rotate-180' : ''}`}>
+              {openSections.connect ? 
+                <Minus size={20} className="text-white" /> : 
+                <Plus size={20} className="text-white" />
+              }
+            </div>
           </button>
           {openSections.connect && (
-            <div className="px-4 pb-4">
-              <div className="mb-4">
-                {/* <h4 className="text-sm font-semibold text-gray-900 mb-3">Connect With Us</h4> */}
-                <div className="flex space-x-4">
-                  <a
-                    href="https://www.facebook.com/grabatozae/"
-                    className="w-10 h-10 rounded-full flex items-center justify-center border border-gray-200 bg-white hover:bg-gray-100"
-                    aria-label="Facebook"
-                  >
-                    <Facebook size={20} className="text-[#1877F2]" />
-                  </a>
-                  <a
-                    href="https://x.com/GrabAtoz"
-                    className="w-10 h-10 rounded-full flex items-center justify-center border border-gray-200 bg-white hover:bg-gray-100"
-                    aria-label="X (Twitter)"
-                  >
-                    <svg viewBox="0 0 24 24" className="w-5 h-5 text-black fill-current" role="img">
-                      <path d="M18.25 2h3.5l-7.66 8.73L24 22h-6.87l-5.02-6.58L6.3 22H2.8l8.2-9.34L0 2h7.04l4.54 6.02L18.25 2z" />
-                    </svg>
-                  </a>
-                  <a
-                    href="https://www.instagram.com/grabatoz/"
-                    className="w-10 h-10 rounded-full flex items-center justify-center border border-gray-200 bg-white hover:bg-gray-100"
-                    aria-label="Instagram"
-                  >
-                    <Instagram size={20} className="text-[#E4405F]" />
-                  </a>
-                  <a
-                    href="https://www.linkedin.com/company/grabatozae"
-                    className="w-10 h-10 rounded-full flex items-center justify-center border border-gray-200 bg-white hover:bg-gray-100"
-                    aria-label="LinkedIn"
-                  >
-                    <Linkedin size={20} className="text-[#0A66C2]" />
-                  </a>
-                  <a
-                    href="https://www.pinterest.com/grabatoz/"
-                    className="w-10 h-10 rounded-full flex items-center justify-center border border-gray-200 bg-white hover:bg-gray-100"
-                    aria-label="Pinterest"
-                  >
-                    <FontAwesomeIcon icon={faPinterest} style={{ width: '20px', height: '20px', color: '#E60023' }} />
-                  </a>
-                  <a
-                    href="https://www.tiktok.com/@grabatoz"
-                    className="w-10 h-10 rounded-full flex items-center justify-center border border-gray-200 bg-white hover:bg-gray-100"
-                    aria-label="TikTok"
-                  >
-                    <FontAwesomeIcon icon={faTiktok} style={{ width: '20px', height: '20px', color: '#000' }} />
-                  </a>
-                  <a
-                    href="https://www.youtube.com/@grabAtoZ"
-                    className="w-10 h-10 rounded-full flex items-center justify-center border border-gray-200 bg-white hover:bg-gray-100"
-                    aria-label="YouTube"
-                  >
-                    <FontAwesomeIcon icon={faYoutube} style={{ width: '20px', height: '20px', color: '#FF0000' }} />
-                  </a>
-                </div>
-
-
-
+            <div className="px-4 pb-4 animate-fadeIn">
+              <div className="grid grid-cols-4 gap-3">
+                <a
+                  href="https://www.facebook.com/grabatozae/"
+                  className="w-12 h-12 rounded-xl flex items-center justify-center bg-gray-800/50 backdrop-blur-sm border border-gray-700 hover:border-[#d9a82e] transition-all duration-300 hover:scale-110"
+                  aria-label="Facebook"
+                >
+                  <Facebook size={20} className="text-[#e2edf4] hover:text-[#d9a82e]" />
+                </a>
+                <a
+                  href="https://x.com/GrabAtoz"
+                  className="w-12 h-12 rounded-xl flex items-center justify-center bg-[#e2edf4]/10 backdrop-blur-sm border border-[#e2edf4]/20 hover:border-[#d9a82e] transition-all duration-300 hover:scale-110"
+                  aria-label="X (Twitter)"
+                >
+                  <svg viewBox="0 0 24 24" className="w-5 h-5 text-[#e2edf4] fill-current" role="img">
+                    <path d="M18.25 2h3.5l-7.66 8.73L24 22h-6.87l-5.02-6.58L6.3 22H2.8l8.2-9.34L0 2h7.04l4.54 6.02L18.25 2z" />
+                  </svg>
+                </a>
+                <a
+                  href="https://www.instagram.com/grabatoz/"
+                  className="w-12 h-12 rounded-xl flex items-center justify-center bg-[#e2edf4]/10 backdrop-blur-sm border border-[#e2edf4]/20 hover:border-[#d9a82e] transition-all duration-300 hover:scale-110"
+                  aria-label="Instagram"
+                >
+                  <Instagram size={20} className="text-[#e2edf4]" />
+                </a>
+                <a
+                  href="https://www.linkedin.com/company/grabatozae"
+                  className="w-12 h-12 rounded-xl flex items-center justify-center bg-[#e2edf4]/10 backdrop-blur-sm border border-[#e2edf4]/20 hover:border-[#d9a82e] transition-all duration-300 hover:scale-110"
+                  aria-label="LinkedIn"
+                >
+                  <Linkedin size={20} className="text-[#e2edf4]" />
+                </a>
+                <a
+                  href="https://www.pinterest.com/grabatoz/"
+                  className="w-12 h-12 rounded-xl flex items-center justify-center bg-[#e2edf4]/10 backdrop-blur-sm border border-[#e2edf4]/20 hover:border-[#d9a82e] transition-all duration-300 hover:scale-110"
+                  aria-label="Pinterest"
+                >
+                  <FontAwesomeIcon icon={faPinterest} style={{ width: '20px', height: '20px' }} className="text-[#e2edf4]" />
+                </a>
+                <a
+                  href="https://www.tiktok.com/@grabatoz"
+                  className="w-12 h-12 rounded-xl flex items-center justify-center bg-[#e2edf4]/10 backdrop-blur-sm border border-[#e2edf4]/20 hover:border-[#d9a82e] transition-all duration-300 hover:scale-110"
+                  aria-label="TikTok"
+                >
+                  <FontAwesomeIcon icon={faTiktok} style={{ width: '20px', height: '20px' }} className="text-[#e2edf4]" />
+                </a>
+                <a
+                  href="https://www.youtube.com/@grabAtoZ"
+                  className="w-12 h-12 rounded-xl flex items-center justify-center bg-[#e2edf4]/10 backdrop-blur-sm border border-[#e2edf4]/20 hover:border-[#d9a82e] transition-all duration-300 hover:scale-110"
+                  aria-label="YouTube"
+                >
+                  <FontAwesomeIcon icon={faYoutube} style={{ width: '20px', height: '20px' }} className="text-[#e2edf4]" />
+                </a>
               </div>
             </div>
           )}
         </div>
 
-        {/* Shop On The Go Section - Always Visible */}
-        <div className="bg-[#1F1F39] text-white p-6">
-          <h3 className="text-xl font-bold text-center mb-4">Shop On The Go</h3>
-          <div className="flex justify-center space-x-4 mb-6 ">
-            <img src="/google_play.png" alt="Google Play" className="h-8" />
-            <img src="/app_store.png" alt="App Store" className="h-8" />
+        {/* Shop On The Go Section - Always Visible with Modern Design */}
+        <div className="bg-[#2377c1] text-white p-6 relative overflow-hidden border-t-2 border-white/30">
+          {/* Decorative background */}
+          <div className="absolute inset-0 opacity-5">
+            <div className="absolute top-0 right-0 w-48 h-48 bg-[#d9a82e] rounded-full filter blur-3xl"></div>
           </div>
 
-          {/* Payment Methods */}
-          <div className="flex justify-center mb-4">
-            <img src="/1.svg" alt="Payment Methods" className="h-8 w-auto" />
-          </div>
+          <div className="relative z-10">
+            <h3 className="text-xl font-bold text-center mb-4 text-white">Shop On The Go</h3>
+            
+            <div className="flex justify-center mb-6">
+              <img src="/google_play.png" alt="Google Play" className="h-10 rounded-lg hover:scale-105 transition-transform duration-300 cursor-pointer" />
+            </div>
 
-          {/* Copyright */}
-          <div className="text-center text-sm text-gray-300">
-            <p> 2025 Grabatoz powered by Crown Excel.</p>
-            <p className="mt-1">Develop By <a href="https://techsolutionor.com" target="_blank" rel="noopener noreferrer">Tech Solutionor</a></p>
+            {/* Payment Methods */}
+            <div className="flex justify-center mb-6">
+              <img src="/1.svg" alt="Payment Methods" className="h-10 w-auto opacity-80" />
+            </div>
+
+            {/* Copyright with Modern Design */}
+            <div className="text-center text-sm space-y-2">
+              <p className="text-white">
+                © 2025 <span className="text-[#d9a82e] font-semibold">Baytal-Protien</span> | Powered by <span className="text-white">Crown Excel</span>
+              </p>
+              <p className="text-white">
+                Developed By <span className="text-[#d9a82e] font-semibold"><a href="https://techsolutionor.com" target="_blank" rel="noopener noreferrer">Tech Solutionor</a></span>
+              </p>
+            </div>
           </div>
         </div>
       </footer>

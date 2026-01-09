@@ -130,8 +130,12 @@ const Navbar = () => {
       {/* Desktop announcement bar + top navbar */}
       <div className="hidden md:block sticky top-0 z-50">
         <div className="bg-[#2377c1] text-white text-xs tracking-wide border-b border-[#c0af9b]">
-          <div className="max-w-7xl mx-auto px-4 overflow-hidden relative">
-            <div style={{ whiteSpace: "nowrap", animation: "marquee 18s linear infinite" }} className="py-2">
+          <div className="max-w-[1600px] mx-auto px-8 overflow-hidden relative">
+            <div style={{ whiteSpace: "nowrap", animation: "marquee 18s linear infinite" }} className="py-2 inline-block">
+              <span className="mx-12">• Enjoy Free Shipping on Orders Over 500 AED!</span>
+              <span className="mx-12">• Enjoy Free Shipping on Orders Over 500 AED!</span>
+              <span className="mx-12">• Enjoy Free Shipping on Orders Over 500 AED!</span>
+              <span className="mx-12">• Enjoy Free Shipping on Orders Over 500 AED!</span>
               <span className="mx-12">• Enjoy Free Shipping on Orders Over 500 AED!</span>
               <span className="mx-12">• Enjoy Free Shipping on Orders Over 500 AED!</span>
               <span className="mx-12">• Enjoy Free Shipping on Orders Over 500 AED!</span>
@@ -139,12 +143,12 @@ const Navbar = () => {
             </div>
           </div>
         </div>
-        <style>{`@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}`}</style>
+        <style>{`@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}`}</style>
 
         <header className="bg-white h-[95px] border-b border-[#c0af9b]/40">
-          <div className="max-w-7xl mx-auto px-4">
-            <div className="grid grid-cols-3 items-center h-20">
-              <nav className="flex items-center gap-8 text-gray-800 text-sm uppercase tracking-wide font-medium">
+          <div className="w-full px-4 lg:px-8">
+            <div className="grid grid-cols-12 gap-2 xl:gap-4 items-center h-20 max-w-[1600px] mx-auto">
+              <nav className="col-span-4 flex items-center gap-3 xl:gap-6 2xl:gap-8 text-gray-800 text-[11px] xl:text-xs 2xl:text-sm uppercase tracking-wide font-medium whitespace-nowrap">
                 <div className="relative" ref={allCategoriesRef}>
                   <button 
                     onClick={() => {
@@ -274,13 +278,13 @@ const Navbar = () => {
                     </div>
                   )}
                 </div>
-                <Link to="/" className="hover:text-[#d9a82e]">Home</Link>
+                <Link to="/" className="hover:text-[#d9a82e] flex-shrink-0">Home</Link>
                 {/* <Link to="/shop" className="hover:text-[#d9a82e]">Catalog</Link> */}
-                <Link to="/shop" className="hover:text-[#d9a82e]">Products</Link>
-                <Link to="/contact" className="hover:text-[#d9a82e]">Contact Us</Link>
+                <Link to="/shop" className="hover:text-[#d9a82e] flex-shrink-0">Products</Link>
+                <Link to="/contact" className="hover:text-[#d9a82e] flex-shrink-0">Contact Us</Link>
               </nav>
 
-              <div className="flex items-center justify-center">
+              <div className="col-span-4 flex items-center justify-center">
                 <Link to="/" className="block">
                   <div className="w-44 h-28 rounded-full overflow-hidden">
                     <img src="/baytal-protien-logo.webp" alt="Logo" className="w-full h-full object-contain" />
@@ -288,7 +292,7 @@ const Navbar = () => {
                 </Link>
               </div>
 
-              <div className="flex items-center justify-end gap-5 text-gray-800">
+              <div className="col-span-4 flex items-center justify-end gap-5 text-gray-800">
                 <button onClick={handleMobileSearchOpen} aria-label="Open search" className="w-10 h-10 flex items-center justify-center">
                   <Search size={22} />
                 </button>

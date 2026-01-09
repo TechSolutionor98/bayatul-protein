@@ -32,10 +32,8 @@ import { useCart } from "../context/CartContext"
 import BrandSlider from "../components/BrandSlider"
 import SEO from "../components/SEO"
 import DynamicSection from "../components/DynamicSection"
-
-
+import RandomProducts from "../components/RandomProducts"
 import config from "../config/config"
-
 
 const API_BASE_URL = `${config.API_URL}`
 
@@ -168,7 +166,10 @@ const Home = () => {
     const fetchData = async () => {
       try {
         // Get products from cache or API
-        const products = await productCache.getProducts()
+        // const products = await productCache.getProducts()
+     
+       // Always fetch fresh products to show latest updates
+        const products = await productCache.fetchAndCacheProducts()
 
         const [categoriesResponse, brandsResponse, bannersResponse, upgradeFeaturesResponse, settingsResponse, sectionsResponse] = await Promise.all([
           axios.get(`${API_BASE_URL}/api/categories`),
@@ -1003,8 +1004,8 @@ const Home = () => {
      
       {/* Three Cards Section - Simple Mobile Grid */}
       <div className="m-3">
-        {/* Desktop & Tablet - Grid Layout */}
-        <div className="hidden md:flex justify-between gap-4">
+       
+        {/* <div className="hidden md:flex justify-between gap-4">
           <div className="w-1/3 lg:w-1/3">
             <Link to="product-category/laptops" aria-label="Browse Lenovo products">
               <img
@@ -1032,10 +1033,10 @@ const Home = () => {
               />
             </Link>
           </div>
-        </div>
+        </div> */}
 
         {/* Mobile - Simple Grid */}
-        <div className="md:hidden grid grid-cols-2 gap-3">
+        {/* <div className="md:hidden grid grid-cols-2 gap-3">
           <div>
             <Link to="/product-category/electronics" aria-label="Browse Lenovo products">
               <img
@@ -1054,7 +1055,7 @@ const Home = () => {
               />
             </Link>
           </div>
-        </div>
+        </div> */}
       </div>
       {/* <div className=" flex items-center justify-center mt-2 mx-2">
         <img src="https://res.cloudinary.com/dyfhsu5v6/image/upload/v1757761484/tamara_tabby_kooxbn.webp" alt="" className="w-full  sm:mx-4 h-auto rounded-lg" />
@@ -1062,12 +1063,17 @@ const Home = () => {
 
       {/* Dynamic Section Position 1 */}
       {/* {renderDynamicSection(1)} */}
-
       {/* Big Sale Section - Handles both mobile and desktop views */}
       <BigSaleSection products={featuredProducts} />
+      
+      <div className="mx-8 my-4">
+        <img src="/Untitled-design-6.svg" alt="image" className="w-full h-auto rounded-lg" />
+      </div>
+      {/* Random Products Section */}
+      <RandomProducts />
 
       {/* Featured Products Section - Mobile Grid */}
-      <section className="py-6 mx-3 md:hidden">
+      <section className="hidden py-6 mx-3">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-bold text-gray-900">Featured Products</h2>
           <button className="text-green-600 hover:text-green-800 font-medium text-sm">View All</button>
@@ -1088,24 +1094,22 @@ const Home = () => {
 
 
       {/* Mobile Banner (now clickable linking to HP brand page) */}
-      <div className="md:hidden rounded-lg shadow-lg mx-3 h-[160px]">
+      {/* <div className="md:hidden rounded-lg shadow-lg mx-3 h-[160px]">
   <Link to={brandUrls.HP} aria-label="Browse HP products">
           <img
-          //  src="https://res.cloudinary.com/dyfhsu5v6/image/upload/v1753939738/hp_ntmpcm.png"
            src="11.png" 
           alt="HP Products Banner Mobile"
             className="w-full h-full cover rounded-lg hover:opacity-95 transition-opacity cursor-pointer"
           />
         </Link>
-      </div>
+      </div> */}
 
      
       {/* Desktop Banner - Two separate images side by side */}
-      <div className="hidden md:flex gap-2 mx-3 h-[270px]">
+      {/* <div className="hidden md:flex gap-2 mx-3 h-[270px]">
         <div className="w-1/2">
           <Link to={brandUrls.HP}>
             <img
-             // src="https://res.cloudinary.com/dyfhsu5v6/image/upload/v1753854476/hp_half_side_1_iqvlks.png"
              src="hp.png"
              alt="HP Products Banner"
               className="w-full h-full cover rounded-lg shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
@@ -1115,19 +1119,18 @@ const Home = () => {
         <div className="w-1/2">
           <Link to={brandUrls.Dell}>
             <img
-             // src="https://res.cloudinary.com/dyfhsu5v6/image/upload/v1753854475/dell_half_side_6_igop3u.png"
              src="dell1.png"
              alt="Dell Products Banner"
               className="w-full h-full cover rounded-lg shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
             />
           </Link>
         </div>
-      </div>
+      </div> */}
 
       {/* HP and Dell Section - Mobile shows only HP */}
-      <section className="py-8 mx-3">
+      {/* <section className="py-8 mx-3">
         <div className="flex flex-col md:flex-row gap-6">
-          {/* HP Products */}
+        
           <div className="w-full md:w-1/2">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-3">
@@ -1157,7 +1160,7 @@ const Home = () => {
             </div>
           </div>
 
-          {/* Dell Products - Hidden on Mobile */}
+          
           <div className="w-full md:w-1/2 hidden md:block">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-3">
@@ -1187,13 +1190,13 @@ const Home = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Dynamic Section Position 3 */}
       {/* {renderDynamicSection(3)} */}
 
       {/* Accessories Banner - Desktop/Mobile Responsive */}
-      <div className="mx-3 my-4 h-[160px] lg:h-[300px]">
+      {/* <div className="mx-3 my-4 h-[160px] lg:h-[300px]">
         <Link to="/product-category/accessories">
           <img
             src="12.png"
@@ -1206,10 +1209,10 @@ const Home = () => {
             className="w-full h-full cover rounded-lg hidden lg:block"
           />
         </Link>
-      </div>
+      </div> */}
 
       {/* Accessories Section - Mobile shows 2 products */}
-      <section className="py-8 mx-3">
+      {/* <section className="py-8 mx-3">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-xl md:text-2xl font-bold text-gray-900">Accessories</h2>
           <button
@@ -1237,29 +1240,27 @@ const Home = () => {
             <p>No accessories products available</p>
           </div>
         )}
-      </section>
+      </section> */}
   {/* <CategoryBanners /> */}
       {/* Dynamic Section Position 4 */}
       {/* {renderDynamicSection(4)} */}
 
       {/* Mobile Banner Asus */}
-      <div className="md:hidden rounded-lg shadow-lg mx-3 h-[160px]">
+      {/* <div className="md:hidden rounded-lg shadow-lg mx-3 h-[160px]">
   <Link to={brandUrls.ASUS} aria-label="Browse ASUS products">
           <img
-            //src="https://res.cloudinary.com/dyfhsu5v6/image/upload/v1753939737/asus_f95cjw.png"
             src="laptop (2).png"
             alt="ASUS Products Banner Mobile"
             className="w-full h-full cover rounded-lg hover:opacity-95 transition-opacity cursor-pointer"
           />
         </Link>
-      </div>
+      </div> */}
 
       {/* Desktop Banner - Two separate images side by side */}
-      <div className="hidden md:flex gap-2 mx-3 h-[270px]">
+      {/* <div className="hidden md:flex gap-2 mx-3 h-[270px]">
         <div className="w-1/2">
           <Link to={brandUrls.Acer}>
             <img
-             // src="https://res.cloudinary.com/dyfhsu5v6/image/upload/v1753854475/acer_half_side_jkun9a.png"
              src="acer01.png"
              alt="HP Products Banner"
               className="w-full h-full cover rounded-lg shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
@@ -1276,12 +1277,12 @@ const Home = () => {
             />
           </Link>
         </div>
-      </div>
+      </div> */}
 
       {/* Acer and ASUS Section - Mobile shows only ASUS */}
-      <section className="py-8 mx-3">
+      {/* <section className="py-8 mx-3">
         <div className="flex flex-col md:flex-row gap-6">
-          {/* Acer Products - Hidden on Mobile */}
+          
           <div className="w-full md:w-1/2 hidden md:block">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-3">
@@ -1311,7 +1312,7 @@ const Home = () => {
             </div>
           </div>
 
-          {/* ASUS Products */}
+         
           <div className="w-full md:w-1/2">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-3">
@@ -1343,13 +1344,13 @@ const Home = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Dynamic Section Position 5 */}
       {/* {renderDynamicSection(5)} */}
 
       {/* Networking Banner - Desktop/Mobile Responsive */}
-      <div className="mx-3 my-4 h-[160px] lg:h-[300px]">
+      {/* <div className="mx-3 my-4 h-[160px] lg:h-[300px]">
         <Link to="/product-category/computers/networking">
           <img
             src="13.png"
@@ -1362,10 +1363,10 @@ const Home = () => {
             className="w-full h-full cover rounded-lg hidden lg:block"
           />
         </Link>
-      </div>
+      </div> */}
 
       {/* Networking Products Section - Mobile shows 2 products */}
-      <section className="py-8 mx-3">
+      {/* <section className="py-8 mx-3">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-xl md:text-2xl font-bold text-gray-900">Networking</h2>
           <button
@@ -1393,29 +1394,27 @@ const Home = () => {
             <p>No networking products available</p>
           </div>
         )}
-      </section>
+      </section> */}
 
       {/* Dynamic Section Position 6 */}
       {/* {renderDynamicSection(6)} */}
 
       {/* Mobile Banner MSI */}
-      <div className="md:hidden rounded-lg shadow-lg mx-3 h-[160px]">
+      {/* <div className="md:hidden rounded-lg shadow-lg mx-3 h-[160px]">
   <Link to={brandUrls.MSI} aria-label="Browse MSI products">
           <img
-            //src="https://res.cloudinary.com/dyfhsu5v6/image/upload/v1753939739/msi_mmaozn.png"
             src="14.png"
             alt="MSI Products Banner Mobile"
             className="w-full h-full cover rounded-lg hover:opacity-95 transition-opacity cursor-pointer"
           />
         </Link>
-      </div>
+      </div> */}
 
       {/* Desktop Banner - Two separate images side by side */}
-      <div className="hidden md:flex gap-2 mx-3 h-[270px]">
+      {/* <div className="hidden md:flex gap-2 mx-3 h-[270px]">
         <div className="w-1/2">
           <Link to={brandUrls.MSI}>
             <img
-             // src="https://res.cloudinary.com/dyfhsu5v6/image/upload/v1753854476/msi_half_side_1_k4dmhz.png"
              src="msi01.png"
              alt="HP Products Banner"
               className="w-full h-full cover rounded-lg shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
@@ -1432,12 +1431,12 @@ const Home = () => {
             />
           </Link>
         </div>
-      </div>
+      </div> */}
 
       {/* MSI and Lenovo Products Section - Mobile shows only MSI */}
-      <section className="py-8 mx-3">
+      {/* <section className="py-8 mx-3">
         <div className="flex flex-col md:flex-row gap-6">
-          {/* MSI Products */}
+          
           <div className="w-full md:w-1/2">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-3">
@@ -1467,7 +1466,7 @@ const Home = () => {
             </div>
           </div>
 
-          {/* Lenovo Products - Hidden on Mobile */}
+        
           <div className="w-full md:w-1/2 hidden md:block">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-3">
@@ -1497,29 +1496,27 @@ const Home = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Dynamic Section Position 7 */}
       {/* {renderDynamicSection(7)} */}
 
       {/* Mobile Banner Apple */}
-      <div className="md:hidden rounded-lg shadow-lg mx-3 h-[160px]">
+      {/* <div className="md:hidden rounded-lg shadow-lg mx-3 h-[160px]">
   <Link to={brandUrls.Apple} aria-label="Browse Apple products">
           <img
-          //  src="https://res.cloudinary.com/dyfhsu5v6/image/upload/v1757769951/apple_half_side_n1cxhc.png"
           src="15.png"
           alt="Apple Products Banner Mobile"
             className="w-full h-full cover rounded-lg hover:opacity-95 transition-opacity cursor-pointer"
           />
         </Link>
-      </div>
+      </div> */}
 
       {/* Desktop Banner - Two separate images side by side */}
-      <div className="hidden md:flex gap-2 mx-3 h-[270px]">
+      {/* <div className="hidden md:flex gap-2 mx-3 h-[270px]">
         <div className="w-1/2">
           <Link to={brandUrls.Apple}>
             <img
-             // src="https://res.cloudinary.com/dyfhsu5v6/image/upload/v1757769951/apple_half_side_n1cxhc.png"
              src="apple (1).png"
              alt="HP Products Banner"
               className="w-full h-full cover rounded-lg shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
@@ -1529,21 +1526,20 @@ const Home = () => {
         <div className="w-1/2">
           <Link to={brandUrls.Samsung}>
             <img
-             // src="https://res.cloudinary.com/dyfhsu5v6/image/upload/v1753939592/samsung_half_side_gtslyc.png"
              src="samsung01.png" 
              alt="Dell Products Banner"
               className="w-full h-full cover rounded-lg shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
             />
           </Link>
         </div>
-      </div>
+      </div> */}
 
 
 
       {/* Apple and Samsung Products Section - Mobile shows only Apple */}
-      <section className="py-8 mx-3">
+      {/* <section className="py-8 mx-3">
         <div className="flex flex-col md:flex-row gap-6">
-          {/* Apple Products */}
+        
           <div className="w-full md:w-1/2">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-3">
@@ -1575,7 +1571,7 @@ const Home = () => {
             </div>
           </div>
 
-          {/* Samsung Products - Hidden on Mobile */}
+          
           <div className="w-full md:w-1/2 hidden md:block">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-3">
@@ -1605,13 +1601,13 @@ const Home = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
            {/* Dynamic Section Position 8 */}
       {/* {renderDynamicSection(8)}
   */}
       {/* Upgrade Features Section - Responsive */}
-      {upgradeFeatures.length > 0 && (
+      {/* {upgradeFeatures.length > 0 && (
         <section className="py-8 md:py-12 bg-gradient-to-br from-blue-50 to-indigo-100 mx-3 rounded-lg my-8">
           <div className="max-w-7xl mx-auto px-4 md:px-6">
             <div className="text-center mb-8 md:mb-12">
@@ -1628,19 +1624,26 @@ const Home = () => {
             </div>
           </div>
         </section>
-      )}
+      )} */}
 
       {/* Dynamic Section Position 9 */}
       {/* {renderDynamicSection(9)} */}
 
       {/* Featured Brands Section - Use BrandSlider component */}
-      {brands.length > 0 && <BrandSlider brands={brands} onBrandClick={handleBrandClick} />}
+      {(brands.length > 0 || categories.length > 0) && (
+        <BrandSlider 
+          brands={brands} 
+          categories={categories}
+          onBrandClick={handleBrandClick}
+          onCategoryClick={handleCategoryClick}
+        />
+      )}
 
       {/* Dynamic Section Position 10 */}
       {/* {renderDynamicSection(10)} */}
 
       {/* Core Service Section - Responsive: Desktop(4 in row), Mobile(2x2 grid) */}
-      <section className="py-8 md:py-10 bg-white mt-2">
+      {/* <section className="py-8 md:py-10 bg-white mt-2">
         <div className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16">
           <h2 className="text-lg lg:text-xl xl:text-2xl font-bold text-center text-gray-900 mb-6 lg:mb-8 xl:mb-12">
             Core Service Aspects
@@ -1688,7 +1691,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       <style>{`
         @keyframes fadeInUp {

@@ -34,10 +34,10 @@ const BannerSlider = ({ banners }) => {
 
   if (!banners || banners.length === 0) {
     return (
-      <section className="relative bg-gradient-to-r from-gray-900 via-purple-900 to-blue-900 overflow-hidden h-[500px] flex items-center justify-center">
+      <section className="relative bg-gradient-to-r from-gray-900 via-purple-900 to-blue-900 overflow-hidden h-[170px] sm:h-[150px] md:h-[300px] lg:h-[500px] flex items-center justify-center">
         <div className="text-white text-center">
-          <h1 className="text-4xl font-bold mb-4">No Banners Available</h1>
-          <p className="text-xl">Please add hero banners from admin panel</p>
+          <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-2 md:mb-4">No Banners Available</h1>
+          <p className="text-sm sm:text-base md:text-lg lg:text-xl">Please add hero banners from admin panel</p>
         </div>
       </section>
     )
@@ -100,7 +100,7 @@ const BannerSlider = ({ banners }) => {
 
   return (
     <section
-      className="relative w-full h-[170px] sm:h-[250px] md:h-[300px] lg:h-[310px] cover"
+      className="relative w-full h-[170px] sm:h-[150px] md:h-[300px] lg:h-[500px] cover"
       onMouseEnter={() => setIsAutoPlaying(false)}
       onMouseLeave={() => setIsAutoPlaying(true)}
     >

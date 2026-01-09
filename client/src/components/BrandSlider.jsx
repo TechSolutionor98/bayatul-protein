@@ -285,7 +285,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { getFullImageUrl } from "../utils/imageUtils";
 
-const BrandSlider = ({ brands = [], onBrandClick, initialIndex = 0 }) => {
+const BrandSlider = ({ brands = [], categories = [], onBrandClick, onCategoryClick, initialIndex = 0 }) => {
   const [brandIndex, setBrandIndex] = useState(initialIndex);
   const [visibleCount, setVisibleCount] = useState(8);
   const [isMobile, setIsMobile] = useState(false);
@@ -294,14 +294,43 @@ const BrandSlider = ({ brands = [], onBrandClick, initialIndex = 0 }) => {
   const startX = useRef(0);
   const scrollLeft = useRef(0);
 
-  const duplicatedBrands = [...brands, ...brands, ...brands]; // triple for seamless infinite scroll
+  // Debug: log what we receive
+  useEffect(() => {
+    console.log('BrandSlider - brands:', brands);
+    console.log('BrandSlider - categories:', categories);
+    console.log('BrandSlider - categories with level:', categories.map(c => ({ 
+      name: c.name, 
+      level: c.level,
+      _id: c._id
+    })));
+  }, [brands, categories]);
+
+  // Filter categories to get subcategories (those with parentCategory)
+  // If no level property exists, look for parentCategory to identify subcategories
+  const filteredCategories = categories.filter(cat => {
+    // If level exists, use it (3rd and 4th level)
+    if (cat.level !== undefined) {
+      return cat.level === 3 || cat.level === 4;
+    }
+    // Otherwise, show categories that have a parentCategory (subcategories)
+    // or if there's no level system, show all active categories
+    return true; // Show all categories if no level system exists
+  });
+
+  console.log('BrandSlider - filteredCategories:', filteredCategories);
+
+  const itemsToShow = filteredCategories.length > 0 ? filteredCategories : brands;
+  // Create enough duplicates to ensure continuous scrolling (at least 5x to handle various screen sizes)
+  const duplicatedItems = itemsToShow.length > 0 
+    ? [...itemsToShow, ...itemsToShow, ...itemsToShow, ...itemsToShow, ...itemsToShow] 
+    : [];
 
   // Update visible count + isMobile
   useEffect(() => {
     const updateVisible = () => {
       const width = window.innerWidth;
       if (width < 768) {
-        setVisibleCount(brands.length);
+        setVisibleCount(itemsToShow.length);
         setIsMobile(true);
       } else {
         setIsMobile(false);
@@ -313,48 +342,46 @@ const BrandSlider = ({ brands = [], onBrandClick, initialIndex = 0 }) => {
     updateVisible();
     window.addEventListener("resize", updateVisible);
     return () => window.removeEventListener("resize", updateVisible);
-  }, [brands.length]);
+  }, [itemsToShow.length]);
 
-  // Auto-scroll with smooth loop (mobile) or index (desktop)
+  // Auto-scroll with smooth loop (both mobile and desktop)
   useEffect(() => {
+    if (itemsToShow.length === 0) return;
+
     const interval = setInterval(() => {
-      if (isMobile && sliderRef.current) {
+      if (sliderRef.current) {
         const container = sliderRef.current;
-        const scrollAmount = 180 + 8; // width + margin
-        const midpoint = (container.scrollWidth / 2) - container.offsetWidth;
-
-        if (container.scrollLeft >= midpoint) {
-          // Reset instantly to start of original brands (no animation)
-          container.scrollLeft = 0;
+        const isMobileView = window.innerWidth < 768;
+        const cardWidth = isMobileView ? container.offsetWidth / 2 : 200;
+        const gap = 12; // space-x-3
+        const scrollAmount = cardWidth + gap;
+        const singleSetWidth = itemsToShow.length * scrollAmount;
+        
+        // Reset when we reach halfway through duplicated items
+        if (container.scrollLeft >= singleSetWidth * 2.5) {
+          // Reset to beginning of second set (instant, no animation)
+          container.scrollLeft = singleSetWidth;
+          // Then immediately continue smooth scroll
+          setTimeout(() => {
+            container.scrollBy({ left: scrollAmount, behavior: "smooth" });
+          }, 10);
         } else {
-          // Scroll to next brand smoothly
-          container.scrollBy({ left: scrollAmount, behavior: "smooth" });
-        }
-      } else if (sliderRef.current) {
-        // Desktop: also use scroll for seamless loop
-        const container = sliderRef.current;
-        const scrollAmount = 180 + 8;
-        const singleSetWidth = brands.length * scrollAmount;
-
-        // If we've scrolled past the first set, reset to beginning of second set
-        if (container.scrollLeft >= singleSetWidth * 1.5) {
-          container.scrollLeft = singleSetWidth / 2;
-        } else {
+          // Normal smooth scroll
           container.scrollBy({ left: scrollAmount, behavior: "smooth" });
         }
       }
     }, 3000);
 
     return () => clearInterval(interval);
-  }, [brands.length, isMobile]);
+  }, [itemsToShow.length]);
 
   // Handle infinite scroll wrap on mouse drag end
   const handleScrollWrap = () => {
     if (!sliderRef.current || isMobile) return;
     
     const container = sliderRef.current;
-    const scrollAmount = 180 + 8;
-    const singleSetWidth = brands.length * scrollAmount;
+    const scrollAmount = 200 + 24;
+    const singleSetWidth = itemsToShow.length * scrollAmount;
     
     // If scrolled too far right, wrap to middle set
     if (container.scrollLeft >= singleSetWidth * 2) {
@@ -366,20 +393,23 @@ const BrandSlider = ({ brands = [], onBrandClick, initialIndex = 0 }) => {
     }
   };
 
-  // Initialize desktop scroll position to middle set
+  // Initialize scroll position to middle set for seamless looping
   useEffect(() => {
-    if (!isMobile && sliderRef.current && brands.length > 0) {
-      const scrollAmount = 180 + 8;
-      const singleSetWidth = brands.length * scrollAmount;
-      sliderRef.current.scrollLeft = singleSetWidth; // Start at middle set
+    if (sliderRef.current && itemsToShow.length > 0) {
+      const isMobileView = window.innerWidth < 768;
+      const cardWidth = isMobileView ? sliderRef.current.offsetWidth / 2 : 200;
+      const gap = 12;
+      const scrollAmount = cardWidth + gap;
+      const singleSetWidth = itemsToShow.length * scrollAmount;
+      sliderRef.current.scrollLeft = singleSetWidth; // Start at second set for seamless loop
     }
-  }, [isMobile, brands.length]);
+  }, [itemsToShow.length]);
 
-  // Get visible brands for desktop
-  const getVisibleBrands = () => {
+  // Get visible items for desktop
+  const getVisibleItems = () => {
     const visible = [];
     for (let i = 0; i < visibleCount; i++) {
-      visible.push(brands[(brandIndex + i) % brands.length]);
+      visible.push(itemsToShow[(brandIndex + i) % itemsToShow.length]);
     }
     return visible;
   };
@@ -429,7 +459,10 @@ const BrandSlider = ({ brands = [], onBrandClick, initialIndex = 0 }) => {
   // Arrow navigation
   const handlePrevClick = () => {
     if (sliderRef.current) {
-      const scrollAmount = 180 + 8; // width + margin
+      const isMobileView = window.innerWidth < 768;
+      const cardWidth = isMobileView ? sliderRef.current.offsetWidth / 2 : 200;
+      const gap = 12; // space-x-3
+      const scrollAmount = cardWidth + gap;
       sliderRef.current.scrollBy({ left: -scrollAmount, behavior: "smooth" });
       setTimeout(handleScrollWrap, 300);
     }
@@ -437,45 +470,53 @@ const BrandSlider = ({ brands = [], onBrandClick, initialIndex = 0 }) => {
 
   const handleNextClick = () => {
     if (sliderRef.current) {
-      const scrollAmount = 180 + 8;
+      const isMobileView = window.innerWidth < 768;
+      const cardWidth = isMobileView ? sliderRef.current.offsetWidth / 2 : 200;
+      const gap = 12; // space-x-3
+      const scrollAmount = cardWidth + gap;
       sliderRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
       setTimeout(handleScrollWrap, 300);
     }
   };
 
   return (
-    <section className="bg-white py-8">
+    <section className="bg-white  py-12 md:py-16">
       <div className="max-w-8xl mx-auto">
-        <div className="relative mb-6">
-          <h2 className="text-xl md:text-2xl font-bold text-gray-900 text-center">
-            Featured Brands
-          </h2>
+        <div className="relative mb-8 md:mb-10">
+          <div className="text-center">
+            <div className="inline-block">
+              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
+                {filteredCategories.length > 0 ? 'Featured Categories' : 'Featured Brands'}
+              </h2>
+              {/* <div className="h-1 w-24 bg-gradient-to-r from-[#d9a82e] to-[#f4c430] mx-auto rounded-full"></div> */}
+            </div>
+          </div>
         </div>
-        <div className="relative mx-3 md:mx-5">
+        <div className="relative mx-3 md:mx-8">
           {/* Left Arrow */}
-          <button
+          {/* <button
             onClick={handlePrevClick}
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white shadow-lg rounded-full p-2 md:p-3 transition-all duration-200 hover:scale-110"
-            aria-label="Previous brands"
+            className="absolute -left-2 md:left-0 top-1/2 -translate-y-1/2 z-10 bg-gradient-to-r from-[#d9a82e] to-[#f4c430] hover:from-[#f4c430] hover:to-[#d9a82e] text-white shadow-xl rounded-full p-3 md:p-4 transition-all duration-300 hover:scale-110 hover:shadow-2xl"
+            aria-label="Previous items"
           >
-            <svg className="w-5 h-5 md:w-6 md:h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
             </svg>
-          </button>
+          </button> */}
 
           {/* Right Arrow */}
-          <button
+          {/* <button
             onClick={handleNextClick}
-            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/90 hover:bg-white shadow-lg rounded-full p-2 md:p-3 transition-all duration-200 hover:scale-110"
-            aria-label="Next brands"
+            className="absolute -right-2 md:right-0 top-1/2 -translate-y-1/2 z-10 bg-gradient-to-r from-[#d9a82e] to-[#f4c430] hover:from-[#f4c430] hover:to-[#d9a82e] text-white shadow-xl rounded-full p-3 md:p-4 transition-all duration-300 hover:scale-110 hover:shadow-2xl"
+            aria-label="Next items"
           >
-            <svg className="w-5 h-5 md:w-6 md:h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
             </svg>
-          </button>
+          </button> */}
 
           <div
-            className="flex overflow-x-scroll space-x-2 hide-scrollbar"
+            className="flex overflow-x-scroll space-x-3 md:space-x-4 hide-scrollbar px-1 py-3"
             ref={sliderRef}
             onMouseDown={handleMouseDown}
             onMouseLeave={handleMouseLeave}
@@ -485,26 +526,45 @@ const BrandSlider = ({ brands = [], onBrandClick, initialIndex = 0 }) => {
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
           >
-            {duplicatedBrands.map((brand, index) => (
+            {duplicatedItems.map((item, index) => (
               <div
-                key={`${brand._id}-${index}`}
-                className="flex-shrink-0"
-                style={{ width: "180px" }}
+                key={`${item._id}-${index}`}
+                className="flex-shrink-0 w-[calc(50%-8px)] md:w-[200px]"
               >
-                <div className="px-2 md:px-3">
-                  <button
-                    onClick={() => onBrandClick && onBrandClick(brand.name)}
-                    className="flex flex-col items-center group transition-all duration-300 w-full"
-                  >
-                    <div className="w-22 h-22 md:w-26 md:h-26 lg:w-40 lg:h-40 overflow-hidden flex items-center justify-center">
-                      <img
-                        src={getFullImageUrl(brand.logo) || "/placeholder.svg"}
-                        alt={brand.name}
-                        className="w-full h-full object-contain"
-                      />
+                <button
+                  onClick={() => {
+                    if (filteredCategories.length > 0) {
+                      onCategoryClick && onCategoryClick(item);
+                    } else {
+                      onBrandClick && onBrandClick(item.name);
+                    }
+                  }}
+                  className=" group"
+                >
+                  <div className="relative bg-white rounded-2xl shadow-none hover:shadow-none transition-all duration-300 p-4 md:p-5 border-2 border-[#d9a82e] hover:border-[#d9a82e] transform -translate-y-1 hover:-translate-y-2 h-[180px] flex flex-col">
+                    {/* Decorative corner accent */}
+                    <div className="absolute top-0 right-0 w-12 h-12 bg-gradient-to-br from-[#d9a82e]/10 to-transparent rounded-bl-3xl rounded-tr-2xl"></div>
+                    
+                    <div className="relative w-full h-full flex items-center justify-center">
+                      <div className="w-full h-full rounded-xl bg-gradient-to-br from-[#d9a82e]/5 to-[#f4c430]/5 group-hover:from-[#d9a82e]/10 group-hover:to-[#f4c430]/10 p-3 flex items-center justify-center transition-all duration-300">
+                        <img
+                          src={getFullImageUrl(item.logo || item.image) || "/placeholder.svg"}
+                          alt={item.name}
+                          className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105"
+                        />
+                      </div>
                     </div>
-                  </button>
-                </div>
+                    
+                    <div className="text-center flex-grow flex items-center justify-center">
+                      {/* <h3 className="text-xs md:text-sm font-semibold text-[#d9a82e] group-hover:text-[#d9a82e] transition-colors duration-300 line-clamp-2">
+                        {item.name}
+                      </h3> */}
+                    </div>
+
+                    {/* Bottom accent line */}
+                    <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#d9a82e] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-b-2xl"></div>
+                  </div>
+                </button>
               </div>
             ))}
           </div>

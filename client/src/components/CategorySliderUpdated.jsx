@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { getFullImageUrl } from "../utils/imageUtils";
 import axios from "axios";
@@ -6,20 +6,24 @@ import config from "../config/config";
 
 const CategorySliderUpdated = ({ onCategoryClick }) => {
   const containerRef = useRef(null);
+  const trackRef = useRef(null);
   const [categories, setCategories] = useState([]);
   const [customItems, setCustomItems] = useState([]);
   const [allSliderItems, setAllSliderItems] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [visibleCount, setVisibleCount] = useState(8);
+  const [visibleCount, setVisibleCount] = useState(4);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [sliderShape, setSliderShape] = useState("circle");
-  const [layoutType, setLayoutType] = useState("default");
+  const [gapPx, setGapPx] = useState(40);
+  const [itemWidthPx, setItemWidthPx] = useState(null);
+  const [isHovered, setIsHovered] = useState(false);
 
   // Touch/mouse state
   const startX = useRef(null);
   const isDragging = useRef(false);
   const [dragOffset, setDragOffset] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [dragging, setDragging] = useState(false);
+  const autoplayRef = useRef(null);
 
   // Fetch categories and settings from slider API
   useEffect(() => {
@@ -40,12 +44,6 @@ const CategorySliderUpdated = ({ onCategoryClick }) => {
           console.log("No custom slider items or error fetching them:", customErr);
         }
         
-        // Fetch settings for shape
-        const settingsRes = await axios.get(`${config.API_URL}/api/settings`);
-        const settingsData = settingsRes.data || {};
-        setSliderShape(settingsData.categorySliderShape || "circle");
-        setLayoutType(settingsData.categorySliderLayoutType || "default");
-        
         // If admin selected categories exist, use them
         let regularCategories = [];
         if (Array.isArray(sliderData) && sliderData.length > 0) {
@@ -61,7 +59,6 @@ const CategorySliderUpdated = ({ onCategoryClick }) => {
         setCustomItems(customSliderItems);
         
         // Merge custom items and regular categories
-        // Custom items come first, then regular categories
         const mergedItems = [
           ...customSliderItems.map(item => ({
             ...item,
@@ -100,41 +97,55 @@ const CategorySliderUpdated = ({ onCategoryClick }) => {
     fetchData();
   }, []);
 
-  // Update visible count based on screen size and zoom level
-  useEffect(() => {
-    const updateVisible = () => {
-      const width = window.innerWidth;
-      
-      if (width >= 1536) {
-        if (width >= 2300) {
-          setVisibleCount(10);
-        } else if (width >= 2050) {
-          setVisibleCount(9);
-        } else if (width >= 1920) {
-          setVisibleCount(9);
-        } else if (width >= 1700) {
-          setVisibleCount(8);
-        } else {
-          setVisibleCount(7);
-        }
-      } else if (width >= 1280) {
-        setVisibleCount(7);
-      } else if (width >= 1024) {
-        setVisibleCount(6);
-      } else if (width >= 768) {
-        setVisibleCount(5);
-      } else if (width >= 640) {
-        setVisibleCount(4);
-      } else if (width >= 480) {
-        setVisibleCount(4);
-      } else {
-        setVisibleCount(3);
-      }
-    };
-    updateVisible();
-    window.addEventListener("resize", updateVisible);
-    return () => window.removeEventListener("resize", updateVisible);
+  const updateLayout = useCallback(() => {
+    const w = window.innerWidth;
+    let vc = 2;
+
+    if (w >= 2560) {
+      vc = 8;
+    } else if (w >= 1920) {
+      vc = 7;
+    } else if (w >= 1536) {
+      vc = 6;
+    } else if (w >= 1280) {
+      vc = 5;
+    } else if (w >= 1024) {
+      vc = 5;
+    } else if (w >= 768) {
+      vc = 3;
+    } else if (w >= 640) {
+      vc = 2;
+    }
+
+    setVisibleCount(vc);
+
+    let g = 24;
+    if (w >= 1536) {
+      g = 40;
+    } else if (w >= 1024) {
+      g = 32;
+    }
+    setGapPx(g);
+
+    const container = containerRef.current;
+    if (container) {
+      const cw = container.offsetWidth;
+      const itemW = (cw - g * (vc - 1)) / vc;
+      setItemWidthPx(Math.max(0, itemW));
+    }
   }, []);
+
+  // Update visible count and compute exact item width to remove extra spacing
+  useEffect(() => {
+    window.addEventListener("resize", updateLayout);
+    return () => window.removeEventListener("resize", updateLayout);
+  }, [updateLayout]);
+
+  useEffect(() => {
+    if (loading) return;
+    const id = requestAnimationFrame(() => updateLayout());
+    return () => cancelAnimationFrame(id);
+  }, [loading, allSliderItems.length, updateLayout]);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -154,16 +165,22 @@ const CategorySliderUpdated = ({ onCategoryClick }) => {
   }, []);
 
   const handleNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % allSliderItems.length);
+    if (allSliderItems && allSliderItems.length > 0) {
+      setCurrentIndex((prev) => (prev + 1) % allSliderItems.length);
+    }
   };
 
   const handlePrev = () => {
-    setCurrentIndex((prev) =>
-      prev - 1 < 0 ? allSliderItems.length - 1 : prev - 1
-    );
+    if (allSliderItems && allSliderItems.length > 0) {
+      setCurrentIndex((prev) =>
+        prev - 1 < 0 ? allSliderItems.length - 1 : prev - 1
+      );
+    }
   };
 
+  // --- Smooth Drag Logic ---
   const getItemWidth = () => {
+    if (itemWidthPx != null) return itemWidthPx;
     if (!containerRef.current) return 0;
     const containerWidth = containerRef.current.offsetWidth;
     return containerWidth / visibleCount;
@@ -181,22 +198,23 @@ const CategorySliderUpdated = ({ onCategoryClick }) => {
     }, 200);
   };
 
+  // Touch event handlers
   const handleTouchStart = (e) => {
     if (isAnimating) return;
     const touch = e.touches[0];
     startX.current = touch.clientX;
     isDragging.current = true;
+    setDragging(true);
   };
-
   const handleTouchMove = (e) => {
     if (!isDragging.current || startX.current === null) return;
     const touch = e.touches[0];
     const diff = touch.clientX - startX.current;
+    // Limit drag so you can't drag beyond the width of one item
     const maxDrag = getItemWidth();
     const limitedDiff = Math.max(Math.min(diff, maxDrag), -maxDrag);
     setDragOffset(limitedDiff);
   };
-
   const handleTouchEnd = (e) => {
     if (!isDragging.current || startX.current === null) return;
     const touch = e.changedTouches[0];
@@ -213,20 +231,21 @@ const CategorySliderUpdated = ({ onCategoryClick }) => {
     }
     isDragging.current = false;
     startX.current = null;
+    setDragging(false);
   };
 
+  // Mouse event handlers
   const handleMouseDown = (e) => {
     if (isAnimating) return;
     isDragging.current = true;
     startX.current = e.clientX;
+    setDragging(true);
   };
-
   const handleMouseMove = (e) => {
     if (!isDragging.current || startX.current === null) return;
     const diff = e.clientX - startX.current;
     setDragOffset(diff);
   };
-
   const handleMouseUp = (e) => {
     if (!isDragging.current || startX.current === null) return;
     const diff = e.clientX - startX.current;
@@ -242,8 +261,8 @@ const CategorySliderUpdated = ({ onCategoryClick }) => {
     }
     isDragging.current = false;
     startX.current = null;
+    setDragging(false);
   };
-
   const handleMouseLeave = () => {
     if (isDragging.current) {
       setIsAnimating(true);
@@ -252,27 +271,60 @@ const CategorySliderUpdated = ({ onCategoryClick }) => {
     }
     isDragging.current = false;
     startX.current = null;
+    setDragging(false);
   };
 
-  const getVisibleCategories = () => {
-    // Use merged items instead of just categories
-    const items = allSliderItems;
-    
-    // If we have fewer items than visible slots, just show all without repeating
-    if (items.length <= visibleCount) {
-      return items;
+  // Keyboard navigation and focus pause
+  const handleKeyDown = (e) => {
+    if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      animateAndSetIndex('next');
+    } else if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      animateAndSetIndex('prev');
     }
-    
-    // Otherwise, use the carousel logic with wrapping
+  };
+
+  // Autoplay with pause on hover/drag/focus
+  useEffect(() => {
+    const shouldAutoplay = !isHovered && !dragging && !isAnimating && (allSliderItems?.length ?? 0) > 1;
+    if (shouldAutoplay) {
+      autoplayRef.current = setInterval(() => {
+        setCurrentIndex((prev) => (prev + 1) % (allSliderItems?.length || 1));
+      }, 3000);
+    }
+    return () => {
+      if (autoplayRef.current) {
+        clearInterval(autoplayRef.current);
+        autoplayRef.current = null;
+      }
+    };
+  }, [isHovered, dragging, isAnimating, allSliderItems?.length]);
+
+  // Compute visible items in order, as a loop
+  const getVisibleCategories = () => {
+    if (!allSliderItems || allSliderItems.length === 0) return [];
+    const maxToShow = Math.min(visibleCount, allSliderItems.length);
     const visible = [];
-    for (let i = 0; i < visibleCount; i++) {
-      visible.push(items[(currentIndex + i) % items.length]);
+    for (let i = 0; i < maxToShow; i++) {
+      const item = allSliderItems[(currentIndex + i) % allSliderItems.length];
+      if (item) {
+        visible.push(item);
+      }
     }
     return visible;
   };
 
   if (loading) {
-    return null;
+    return (
+      <section className="mb-5 bg-white">
+        <div className="max-w-8xl lg:px-3">
+          <div className="flex items-center justify-center py-8">
+            <div className="text-gray-500">Loading categories...</div>
+          </div>
+        </div>
+      </section>
+    );
   }
 
   if (allSliderItems.length === 0) {
@@ -280,43 +332,48 @@ const CategorySliderUpdated = ({ onCategoryClick }) => {
   }
 
   const visibleCategories = getVisibleCategories();
-  const shouldShowArrows = allSliderItems.length > visibleCount;
 
+  const progressPercent = allSliderItems && allSliderItems.length > 0
+    ? ((currentIndex % allSliderItems.length) / allSliderItems.length) * 100
+    : 0;
+
+  // --- Style for smooth transform ---
   const sliderStyle = {
     transform: `translateX(${dragOffset}px)`,
     transition: isDragging.current || isAnimating ? 'transform 0.2s cubic-bezier(0.4,0,0.2,1)' : 'none',
   };
 
   return (
-    <section className="mb-5 bg-white pt-4">
-      <div className="max-w-8xl lg:px-3">
-        <div className="flex items-center justify-between">
-          {shouldShowArrows && (
-            <button
-              onClick={handlePrev}
-              className="text-black hover:text-gray-600"
-            >
-              <ChevronLeft size={35} />
-            </button>
-          )}
-
+    <section className="bg-white py-8 md:py-12">
+      <div className="max-w-8xl mx-auto px-4 md:px-6 lg:px-8">
+        {/* group to control hover for arrows */}
+        <div
+          className="relative group"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
           <div
-            className={`flex-1 overflow-hidden ${!shouldShowArrows ? 'mx-0' : ''}`}
+            className="flex-1 overflow-hidden outline-none"
             ref={containerRef}
-            onTouchStart={shouldShowArrows ? handleTouchStart : undefined}
-            onTouchMove={shouldShowArrows ? handleTouchMove : undefined}
-            onTouchEnd={shouldShowArrows ? handleTouchEnd : undefined}
-            onMouseDown={shouldShowArrows ? handleMouseDown : undefined}
-            onMouseMove={shouldShowArrows ? handleMouseMove : undefined}
-            onMouseUp={shouldShowArrows ? handleMouseUp : undefined}
-            onMouseLeave={shouldShowArrows ? handleMouseLeave : undefined}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseLeave}
+            onKeyDown={handleKeyDown}
+            tabIndex={0}
+            role="region"
+            aria-roledescription="carousel"
+            aria-label="Product categories"
+            aria-live="polite"
             style={{ userSelect: 'none', WebkitUserSelect: 'none' }}
           >
             <div
-              className={`flex items-center transition-transform duration-300 ease-in-out ${
-                allSliderItems.length <= visibleCount ? 'justify-center' : 'justify-evenly'
-              }`}
-              style={shouldShowArrows ? sliderStyle : {}}
+              ref={trackRef}
+              className="flex items-center gap-6 lg:gap-8 transition-transform duration-300 ease-in-out"
+              style={sliderStyle}
             >
               {visibleCategories.map((item, index) => {
                 // Handle click based on item type
@@ -324,221 +381,103 @@ const CategorySliderUpdated = ({ onCategoryClick }) => {
                   if (item.isCustomItem) {
                     // Custom item - redirect to specified URL
                     if (item.redirectUrl) {
-                      // Check if it's an external URL or internal path
-                      if (item.redirectUrl.startsWith('http://') || item.redirectUrl.startsWith('https://')) {
-                        window.location.href = item.redirectUrl;
-                      } else {
-                        window.location.href = item.redirectUrl;
-                      }
+                      window.location.href = item.redirectUrl;
                     }
                   } else {
-                    // Regular category or subcategory - pass the full item object
+                    // Regular category - pass the full item object
                     if (onCategoryClick) {
                       onCategoryClick(item);
                     }
                   }
                 };
 
-                // Get shape-specific styles
-                const getShapeStyle = () => {
-                  switch (sliderShape) {
-                    case "circle":
-                      return { 
-                        borderRadius: "50%", 
-                        overflow: "hidden", 
-                        aspectRatio: "1/1",
-                        clipPath: "none"
-                      };
-                    case "square":
-                      return { 
-                        borderRadius: "0", 
-                        overflow: "hidden", 
-                        aspectRatio: "1/1",
-                        clipPath: "none"
-                      };
-                    case "triangle":
-                      return { 
-                        clipPath: "polygon(50% 0%, 0% 100%, 100% 100%)", 
-                        overflow: "hidden", 
-                        aspectRatio: "1/1",
-                        borderRadius: "0"
-                      };
-                    case "octagon":
-                      return { 
-                        clipPath: "polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)", 
-                        overflow: "hidden", 
-                        aspectRatio: "1/1",
-                        borderRadius: "0"
-                      };
-                    default:
-                      return { 
-                        borderRadius: "50%", 
-                        overflow: "hidden", 
-                        aspectRatio: "1/1",
-                        clipPath: "none"
-                      };
-                  }
-                };
-
-                // Get layout-specific classes
-                const getLayoutClasses = () => {
-                  switch (layoutType) {
-                    case "compact":
-                      return {
-                        container: "flex flex-col items-center group flex-shrink-0",
-                        imageSize: "w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20 xl:w-24 xl:h-24 2xl:w-28 2xl:h-28",
-                        textClass: "text-xs font-medium text-gray-700 text-center mt-1 truncate w-full px-0.5"
-                      };
-                    case "modern":
-                      return {
-                        container: "flex flex-col items-center group flex-shrink-0 transition-transform hover:scale-105",
-                        imageWrapper: "p-2 bg-white rounded-2xl shadow-md hover:shadow-xl transition-shadow",
-                        imageSize: "w-14 h-14 md:w-18 md:h-18 lg:w-24 lg:h-24 xl:w-28 xl:h-28 2xl:w-32 2xl:h-32",
-                        textClass: "text-xs md:text-sm font-bold text-gray-800 text-center mt-2 truncate w-full px-1"
-                      };
-                    case "minimal":
-                      return {
-                        container: "flex flex-col items-center group flex-shrink-0",
-                        imageWrapper: "p-1 border border-gray-200 rounded-lg",
-                        imageSize: "w-14 h-14 md:w-18 md:h-18 lg:w-24 lg:h-24 xl:w-28 xl:h-28 2xl:w-32 2xl:h-32",
-                        textClass: "text-xs md:text-sm font-medium text-gray-600 text-center mt-1.5 truncate w-full"
-                      };
-                    case "card":
-                      return {
-                        container: "flex flex-col items-center group flex-shrink-0",
-                        imageWrapper: "p-3 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl border border-gray-200 shadow-sm",
-                        imageSize: "w-14 h-14 md:w-18 md:h-18 lg:w-24 lg:h-24 xl:w-28 xl:h-28 2xl:w-32 2xl:h-32",
-                        textClass: "text-xs md:text-sm font-semibold text-gray-700 text-center mt-2 truncate w-full px-1"
-                      };
-                    case "banner":
-                      return {
-                        container: "flex flex-col items-center group flex-shrink-0",
-                        imageWrapper: "p-2 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg shadow",
-                        imageSize: "w-14 h-14 md:w-18 md:h-18 lg:w-24 lg:h-24 xl:w-28 xl:h-28 2xl:w-32 2xl:h-32",
-                        textClass: "text-xs md:text-sm font-bold text-gray-900 text-center mt-2 truncate w-full px-1"
-                      };
-                    case "circularCard":
-                      return {
-                        container: "flex flex-col items-center group flex-shrink-0",
-                        cardWrapper: "rounded-full overflow-hidden shadow-lg hover:shadow-xl transition-shadow",
-                        cardWrapperStyle: { 
-                          background: "linear-gradient(135deg, #e3f313 0%, #00b65d 50%, #009c50 100%)"
-                        },
-                        cardSize: "w-20 h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 xl:w-36 xl:h-36 2xl:w-40 2xl:h-40",
-                        imageSize: "w-full h-full object-cover",
-                        textClass: "text-xs md:text-sm font-bold text-gray-700 text-center mt-2 truncate w-full px-1",
-                        isCircularCard: true
-                      };
-                    default: // "default"
-                      return {
-                        container: "flex flex-col items-center group flex-shrink-0",
-                        imageSize: "w-16 h-16 md:w-20 md:h-20 lg:w-38 lg:h-38 xl:w-32 xl:h-32 2xl:w-36 2xl:h-36",
-                        textClass: "text-xs md:text-sm font-bold text-gray-700 text-center mt-0.5 md:mt-0.5 lg:mt-0.5 truncate w-full px-1"
-                      };
-                  }
-                };
-
-                const layoutClasses = getLayoutClasses();
-
                 return (
                   <button
                     key={(item._id || item.id) + '-' + index}
                     onClick={handleItemClick}
-                    className={layoutClasses.container}
-                    style={{
-                      width: allSliderItems.length <= visibleCount ? 'auto' : `${100 / visibleCount}%`,
-                      maxWidth: "160px",
-                      minWidth: "80px",
-                    }}
+                    className="flex flex-col items-center group/item flex-shrink-0 focus:outline-none"
+                    style={{ flex: itemWidthPx != null ? `0 0 ${itemWidthPx}px` : undefined, width: itemWidthPx == null ? `${100 / visibleCount}%` : undefined }}
                   >
-                    {layoutClasses.isCircularCard ? (
-                      <>
+                    <div
+                      className="flex items-center justify-center w-full"
+                      style={{ willChange: 'transform', transform: 'translateZ(0)' }}
+                    >
+                      {item && item.image ? (
                         <div
-                          className={`${layoutClasses.cardWrapper} ${layoutClasses.cardSize}`}
-                          style={{ 
-                            willChange: 'transform', 
-                            transform: 'translateZ(0)',
-                            ...layoutClasses.cardWrapperStyle 
-                          }}
+                          className="relative p-1.5 rounded-full shadow-[0_10px_25px_-10px_rgba(217,168,46,0.5)]"
+                          style={{ backgroundColor: '#E2EDF4', boxShadow: '0 10px 25px -10px rgba(217,168,46,0.5)' }}
                         >
-                          {item.image ? (
+                          <div className="rounded-full overflow-hidden w-28 h-28 md:w-40 md:h-40 lg:w-36 lg:h-36 xl:w-36 xl:h-36 bg-white p-5">
                             <img
                               src={getFullImageUrl(item.image)}
-                              alt={item.name}
-                              width="176"
-                              height="176"
-                              loading="eager"
-                              className={layoutClasses.imageSize}
+                              alt={item.name || 'Category'}
+                              loading="lazy"
+                              className="w-full h-full bg-contain transform transition-transform duration-300 ease-out group-hover/item:scale-105 group-focus-within/item:scale-105"
                             />
-                          ) : (
-                            <div className="w-full h-full flex items-center justify-center bg-gray-100">
-                              <span className="text-2xl md:text-3xl">📦</span>
-                            </div>
-                          )}
+                          </div>
                         </div>
-                        <span className={layoutClasses.textClass}>
-                          {(() => {
-                            const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-                            const name = item.name;
-                            if (isMobile && name.length > 14) {
-                              return name.slice(0, 14) + '...';
-                            }
-                            return name;
-                          })()}
-                        </span>
-                      </>
-                    ) : (
-                      <>
+                      ) : (
                         <div
-                          className={`flex items-center justify-center w-full ${layoutClasses.imageWrapper || ''}`}
-                          style={{ willChange: 'transform', transform: 'translateZ(0)' }}
+                          className="relative p-1.5 rounded-full shadow-[0_10px_25px_-10px_rgba(217,168,46,0.5)]"
+                          style={{ backgroundColor: '#E2EDF4', boxShadow: '0 10px 25px -10px rgba(217,168,46,0.5)' }}
                         >
-                          {item.image ? (
-                            <img
-                              src={getFullImageUrl(item.image)}
-                              alt={item.name}
-                              width="176"
-                              height="176"
-                              loading="eager"
-                              className={`${layoutClasses.imageSize} ${sliderShape === 'circle' ? 'object-cover' : 'bg-cover'}`}
-                              style={{...getShapeStyle(), display: 'block'}}
-                            />
-                          ) : (
-                            <div 
-                              className={`${layoutClasses.imageSize} border-2 border-gray-200 flex items-center justify-center bg-gray-100`}
-                              style={{...getShapeStyle(), display: 'flex'}}
-                            >
-                              <span className="text-lg md:text-2xl">📦</span>
-                            </div>
-                          )}
+                          <div className="rounded-full w-28 h-28 md:w-40 md:h-40 lg:w-36 lg:h-36 xl:w-36 xl:h-36 flex items-center justify-center bg-[#111] text-white transform transition-transform duration-300 ease-out group-hover/item:scale-105 group-focus-within/item:scale-105">
+                            <span className="text-xl md:text-2xl">📦</span>
+                          </div>
                         </div>
+                      )}
+                    </div>
 
-                        <span className={layoutClasses.textClass}>
-                          {(() => {
-                            const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-                            const name = item.name;
-                            if (isMobile && name.length > 14) {
-                              return name.slice(0, 14) + '...';
-                            }
-                            return name;
-                          })()}
-                        </span>
-                      </>
-                    )}
+                    {/* Label pill */}
+                    <div
+                      className="mt-5 w-[85%] max-w-[320px] rounded-full py-3 px-5 text-center shadow-lg"
+                      style={{ backgroundColor: '#E2EDF4', boxShadow: '0 10px 25px -10px rgba(217,168,46,0.25)' }}
+                    >
+                      <div className="text-sm md:text-base font-semibold text-black truncate" style={{maxWidth: '140px'}}>
+                        {item?.name && item.name.length > 12
+                          ? item.name.slice(0, 12) + '...'
+                          : item?.name || 'Category'}
+                      </div>
+                      {(() => {
+                        const count = item?.productCount ?? item?.count ?? item?.productsCount ?? item?.totalProducts
+                        if (typeof count === 'number') {
+                          return <div className="text-[12px] md:text-sm text-black/70 mt-0.5">{count} Products</div>
+                        }
+                        return null
+                      })()}
+                    </div>
                   </button>
                 );
               })}
             </div>
           </div>
 
-          {shouldShowArrows && (
-            <button
-              onClick={handleNext}
-              className="text-black hover:text-gray-600"
-            >
-              <ChevronRight size={35} />
-            </button>
-          )}
+          {/* Overlay arrows */}
+          <button
+            onClick={handlePrev}
+            className="absolute left-2 top-1/2 -translate-y-1/2 text-white rounded-full w-11 h-11 flex items-center justify-center shadow-xl md:opacity-0 md:pointer-events-none transition-opacity duration-200 group-hover:opacity-100 group-hover:pointer-events-auto group-focus-within:opacity-100 group-focus-within:pointer-events-auto hover:brightness-95"
+            style={{ backgroundColor: '#d9a82e', boxShadow: '0 10px 25px -10px rgba(217,168,46,0.5)' }}
+            aria-label="Previous"
+          >
+            <ChevronLeft size={22} />
+          </button>
+          <button
+            onClick={handleNext}
+            className="absolute right-2 top-1/2 -translate-y-1/2 text-white rounded-full w-11 h-11 flex items-center justify-center shadow-xl md:opacity-0 md:pointer-events-none transition-opacity duration-200 group-hover:opacity-100 group-hover:pointer-events-auto group-focus-within:opacity-100 group-focus-within:pointer-events-auto hover:brightness-95"
+            style={{ backgroundColor: '#d9a82e', boxShadow: '0 10px 25px -10px rgba(217,168,46,0.5)' }}
+            aria-label="Next"
+          >
+            <ChevronRight size={22} />
+          </button>
+
+          {/* Progress bar */}
+          <div className="mt-6 mx-auto w-[85%] max-w-[980px] h-1.5 rounded-full bg-black/5 overflow-hidden">
+            <div
+              className="h-full transition-all duration-500"
+              style={{ width: `${progressPercent}%`, backgroundColor: '#d9a82e' }}
+              aria-hidden="true"
+            />
+          </div>
         </div>
       </div>
     </section>
