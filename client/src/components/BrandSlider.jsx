@@ -305,17 +305,8 @@ const BrandSlider = ({ brands = [], categories = [], onBrandClick, onCategoryCli
     })));
   }, [brands, categories]);
 
-  // Filter categories to get subcategories (those with parentCategory)
-  // If no level property exists, look for parentCategory to identify subcategories
-  const filteredCategories = categories.filter(cat => {
-    // If level exists, use it (3rd and 4th level)
-    if (cat.level !== undefined) {
-      return cat.level === 3 || cat.level === 4;
-    }
-    // Otherwise, show categories that have a parentCategory (subcategories)
-    // or if there's no level system, show all active categories
-    return true; // Show all categories if no level system exists
-  });
+  // Show all categories without filtering by level
+  const filteredCategories = categories;
 
   console.log('BrandSlider - filteredCategories:', filteredCategories);
 
@@ -486,7 +477,7 @@ const BrandSlider = ({ brands = [], categories = [], onBrandClick, onCategoryCli
           <div className="text-center">
             <div className="inline-block">
               <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
-                {filteredCategories.length > 0 ? 'Featured Categories' : 'Featured Brands'}
+                {filteredCategories.length > 0 ? 'Featured' : 'Featured Brands'}
               </h2>
               {/* <div className="h-1 w-24 bg-gradient-to-r from-[#d9a82e] to-[#f4c430] mx-auto rounded-full"></div> */}
             </div>
@@ -529,7 +520,7 @@ const BrandSlider = ({ brands = [], categories = [], onBrandClick, onCategoryCli
             {duplicatedItems.map((item, index) => (
               <div
                 key={`${item._id}-${index}`}
-                className="flex-shrink-0 w-[calc(50%-8px)] md:w-[200px]"
+                className="flex-shrink-0 w-[calc(45%-8px)] md:w-[145px]"
               >
                 <button
                   onClick={() => {
@@ -541,7 +532,7 @@ const BrandSlider = ({ brands = [], categories = [], onBrandClick, onCategoryCli
                   }}
                   className=" group"
                 >
-                  <div className="relative bg-white rounded-2xl shadow-none hover:shadow-none transition-all duration-300 p-4 md:p-5 border-2 border-[#d9a82e] hover:border-[#d9a82e] transform -translate-y-1 hover:-translate-y-2 h-[180px] flex flex-col">
+                  <div className="relative bg-white rounded-2xl shadow-[0_4px_12px_rgba(226,237,244,0.8)]  transition-all duration-300 p-3 md:p-4 h-[140px] flex flex-col overflow-hidden">
                     {/* Decorative corner accent */}
                     <div className="absolute top-0 right-0 w-12 h-12 bg-gradient-to-br from-[#d9a82e]/10 to-transparent rounded-bl-3xl rounded-tr-2xl"></div>
                     

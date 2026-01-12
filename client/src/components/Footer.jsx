@@ -1,7 +1,7 @@
 "use client"
 
 import { Link } from "react-router-dom"
-import { Facebook, Instagram, Plus, Minus, Linkedin } from "lucide-react"
+import { Facebook, Instagram, Plus, Minus, Linkedin, RotateCcw, Cookie, FileText, Shield, AlertCircle, Ticket, Truck, MapPin, Phone, Building2, BookOpen, ShoppingBag, LogIn, UserPlus, Heart, ShoppingCart } from "lucide-react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faPinterest } from "@fortawesome/free-brands-svg-icons"
 import { faTiktok } from "@fortawesome/free-brands-svg-icons"
@@ -126,300 +126,157 @@ const Footer = ({ className = "" }) => {
           </div>
 
           <div className="max-w-[1600px] mx-auto pt-12 pb-8 px-4 lg:px-8 relative z-10">
-            {/* First Row - Logo, Newsletter, Social Icons, Download App in one horizontal line */}
-            <div className="flex  flex-wrap items-start justify-between gap-8 mb-12 pb-8 border-b-2 border-white/30">
-              {/* Logo */}
-              {/* <div className="flex-shrink-0">
-                <img src="/logo.png" alt="Logo" className="w-28 lg:w-32 xl:w-36 filter drop-shadow-lg" />
-              </div> */}
+      
+            {/* Main Content - Two Columns */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+              {/* Left Section - Grid Layout for Company, My Account, and Follow Us */}
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+                {/* First Row: Company (6 cols) and My Account (6 cols) */}
+                <div className="md:col-span-6 flex flex-col gap-3">
+                  <h3 className="text-white text-lg font-bold mb-2 pb-2 border-b-2 border-[#d9a82e]">Company</h3>
+                  <Link to="/contact" className="flex items-center gap-2 text-white hover:text-white transition-all duration-500 ease-in-out text-sm group hover:scale-105">
+                    <div className="w-10 h-10 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center group-hover:border-white group-hover:bg-white/20 transition-all duration-500 ease-in-out flex-shrink-0">
+                      <Phone className="w-4 h-4 group-hover:scale-110 transition-transform duration-500 ease-in-out" />
+                    </div>
+                    <span className="text-base border-b border-transparent group-hover:border-white transition-all duration-400 ease-in-out">Contact Us</span>
+                  </Link>
+                  <Link to="/about" className="flex items-center gap-2 text-white hover:text-white transition-all duration-500 ease-in-out text-sm group hover:scale-105">
+                    <div className="w-10 h-10 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center group-hover:border-white group-hover:bg-white/20 transition-all duration-500 ease-in-out flex-shrink-0">
+                      <Building2 className="w-4 h-4 group-hover:scale-110 transition-transform duration-500 ease-in-out" />
+                    </div>
+                    <span className="text-base border-b border-transparent group-hover:border-white transition-all duration-400 ease-in-out">About Us</span>
+                  </Link>
+                  <a href="https://blog.grabatoz.ae/" rel="noopener noreferrer" className="flex items-center gap-2 text-white hover:text-white transition-all duration-500 ease-in-out text-sm group hover:scale-105">
+                    <div className="w-10 h-10 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center group-hover:border-white group-hover:bg-white/20 transition-all duration-500 ease-in-out flex-shrink-0">
+                      <BookOpen className="w-4 h-4 group-hover:scale-110 transition-transform duration-500 ease-in-out" />
+                    </div>
+                    <span className="text-base border-b border-transparent group-hover:border-white transition-all duration-400 ease-in-out">Blog</span>
+                  </a>
+                  <Link to="/shop" className="flex items-center gap-2 text-white hover:text-white transition-all duration-500 ease-in-out text-sm group hover:scale-105">
+                    <div className="w-10 h-10 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center group-hover:border-white group-hover:bg-white/20 transition-all duration-500 ease-in-out flex-shrink-0">
+                      <ShoppingBag className="w-4 h-4 group-hover:scale-110 transition-transform duration-500 ease-in-out" />
+                    </div>
+                    <span className="text-base border-b border-transparent group-hover:border-white transition-all duration-400 ease-in-out">Shop</span>
+                  </Link>
+                </div>
 
-              {/* Newsletter Section */}
-              <div className="flex-1 min-w-[280px] max-w-[400px]">
-                <h4 className="text-sm lg:text-base font-bold mb-2 text-white">
-                  Stay Updated
-                </h4>
-                {/* <p className="text-xs lg:text-sm text-[#e2edf4] mb-3">Get exclusive deals & news</p> */}
+                <div className="md:col-span-6 flex flex-col gap-3">
+                  <h3 className="text-white text-lg font-bold mb-2 pb-2 border-b-2 border-[#d9a82e]">My Account</h3>
+                  <Link to="/login" className="flex items-center gap-2 text-white hover:text-white transition-all duration-500 ease-in-out text-sm group hover:scale-105">
+                    <div className="w-10 h-10 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center group-hover:border-white group-hover:bg-white/20 transition-all duration-500 ease-in-out flex-shrink-0">
+                      <LogIn className="w-4 h-4 group-hover:scale-110 transition-transform duration-500 ease-in-out" />
+                    </div>
+                    <span className="text-base border-b border-transparent group-hover:border-white transition-all duration-400 ease-in-out">Login</span>
+                  </Link>
+                  <Link to="/register" className="flex items-center gap-2 text-white hover:text-white transition-all duration-500 ease-in-out text-sm group hover:scale-105">
+                    <div className="w-10 h-10 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center group-hover:border-white group-hover:bg-white/20 transition-all duration-500 ease-in-out flex-shrink-0">
+                      <UserPlus className="w-4 h-4 group-hover:scale-110 transition-transform duration-500 ease-in-out" />
+                    </div>
+                    <span className="text-base border-b border-transparent group-hover:border-white transition-all duration-400 ease-in-out">Register</span>
+                  </Link>
+                  <Link to="/wishlist" className="flex items-center gap-2 text-white hover:text-white transition-all duration-500 ease-in-out text-sm group hover:scale-105">
+                    <div className="w-10 h-10 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center group-hover:border-white group-hover:bg-white/20 transition-all duration-500 ease-in-out flex-shrink-0">
+                      <Heart className="w-4 h-4 group-hover:scale-110 transition-transform duration-500 ease-in-out" />
+                    </div>
+                    <span className="text-base border-b border-transparent group-hover:border-white transition-all duration-400 ease-in-out">Wishlist</span>
+                  </Link>
+                  <Link to="/cart" className="flex items-center gap-2 text-white hover:text-white transition-all duration-500 ease-in-out text-sm group hover:scale-105">
+                    <div className="w-10 h-10 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center group-hover:border-white group-hover:bg-white/20 transition-all duration-500 ease-in-out flex-shrink-0">
+                      <ShoppingCart className="w-4 h-4 group-hover:scale-110 transition-transform duration-500 ease-in-out" />
+                    </div>
+                    <span className="text-base border-b border-transparent group-hover:border-white transition-all duration-400 ease-in-out">Cart</span>
+                  </Link>
+                </div>
 
-                {/* Form with Modern Design */}
-                <form onSubmit={handleNewsletterSubmit}>
+                {/* Second Row: Follow Us (12 cols - full width) */}
+                <div className="md:col-span-12">
+                  <h3 className="text-white text-lg font-bold mb-4 pb-2 ">Follow Us</h3>
+                  <div className="flex flex-wrap gap-3">
+                    <a href="https://www.facebook.com/grabatozae/" target="_blank" className="w-11 h-11 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:text-white hover:border-white hover:bg-white/20 transition-all duration-300 hover:scale-110">
+                      <Facebook className="w-5 h-5" />
+                    </a>
+                    <a href="https://x.com/GrabAtoz" target="_blank" className="w-11 h-11 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:text-white hover:border-white hover:bg-white/20 transition-all duration-300 hover:scale-110" aria-label="X (Twitter)">
+                      <svg viewBox="0 0 24 24" className="w-5 h-5 fill-current" role="img">
+                        <path d="M18.25 2h3.5l-7.66 8.73L24 22h-6.87l-5.02-6.58L6.3 22H2.8l8.2-9.34L0 2h7.04l4.54 6.02L18.25 2z" />
+                      </svg>
+                    </a>
+                    <a href="https://www.instagram.com/grabatoz/" target="_blank" className="w-11 h-11 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:text-white hover:border-white hover:bg-white/20 transition-all duration-300 hover:scale-110">
+                      <Instagram className="w-5 h-5" />
+                    </a>
+                    <a href="https://www.linkedin.com/company/grabatozae" target="_blank" className="w-11 h-11 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:text-white hover:border-white hover:bg-white/20 transition-all duration-300 hover:scale-110">
+                      <Linkedin className="w-5 h-5" />
+                    </a>
+                    <a href="https://www.pinterest.com/grabatoz/" target="_blank" className="w-11 h-11 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:text-white hover:border-white hover:bg-white/20 transition-all duration-300 hover:scale-110">
+                      <FontAwesomeIcon icon={faPinterest} className="w-5 h-5" />
+                    </a>
+                    <a href="https://www.tiktok.com/@grabatoz" target="_blank" className="w-11 h-11 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:text-white hover:border-white hover:bg-white/20 transition-all duration-300 hover:scale-110">
+                      <FontAwesomeIcon icon={faTiktok} className="w-5 h-5" />
+                    </a>
+                    <a href="https://www.youtube.com/@grabAtoZ" target="_blank" className="w-11 h-11 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:text-white hover:border-white hover:bg-white/20 transition-all duration-300 hover:scale-110">
+                      <FontAwesomeIcon icon={faYoutube} className="w-5 h-5" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Section - Newsletter & App Download */}
+              <div className="flex flex-col">
+                 <div className="flex items-center justify-center mb-8 pb-6 border-b-2 border-white/30">
+              <div className="flex-shrink-0">
+                <img src="/white (2).png" alt="Baytal-Protein Logo" className="w-40 lg:w-48 filter drop-shadow-lg justify-center" />
+              </div>
+              
+            </div>
+                <h3 className="text-xl lg:text-2xl font-bold text-white mb-4">Stay in the loop with our weekly newsletter</h3>
+                
+                {/* Newsletter Form */}
+                <form onSubmit={handleNewsletterSubmit} className="mb-6">
                   <div className="relative">
                     <input
                       type="email"
                       placeholder="Enter your email"
-                      className="w-full px-4 py-3 text-xs lg:text-sm bg-white placeholder-gray-500 rounded-xl border-2 border-[#d9a82e] text-[#2377c1] focus:outline-none focus:border-[#d9a82e] focus:ring-2 focus:ring-[#d9a82e]/50 transition-all duration-300"
+                      className="w-full px-4 py-3.5 text-sm bg-white/90 placeholder-gray-500 rounded-lg border-2 border-transparent text-[#2377c1] focus:outline-none focus:border-[#d9a82e] focus:ring-2 focus:ring-[#d9a82e]/50 transition-all duration-300"
                       value={newsletterEmail}
                       onChange={handleNewsletterInput}
                       required
                     />
                     <button 
                       type="submit" 
-                      className="absolute right-2 top-1/2 -translate-y-1/2 bg-[#d9a82e] hover:bg-[#d9a82e]/90 text-white rounded-lg px-4 py-2 text-xs lg:text-sm font-semibold transition-all duration-300 shadow-lg"
+                      className="absolute right-2 top-1/2 -translate-y-1/2 bg-[#d9a82e] hover:bg-[#d9a82e]/90 text-white rounded-md px-5 py-2 text-sm font-semibold transition-all duration-300 shadow-lg hover:shadow-xl"
                     >
-                      Subscribe
+                      →
                     </button>
                   </div>
                 </form>
+
+                {/* App Download Buttons */}
+                <div className="flex gap-3 justify-center mb-4">
+                  <img 
+                    src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" 
+                    alt="Download on App Store" 
+                    className="h-11 rounded-lg hover:scale-105 transition-transform duration-300 cursor-pointer"
+                  />
+                  <img 
+                    src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" 
+                    alt="Get it on Google Play" 
+                    className="h-11 rounded-lg hover:scale-105 transition-transform duration-300 cursor-pointer"
+                  />
+                </div>
+
                 {showNewsletterModal && (
                   <NewsletterModal
                     email={newsletterEmail}
                     onClose={() => setShowNewsletterModal(false)}
                   />
                 )}
-              </div>
- 
+                
 
-              <div className="flex-shrink-0 -ml-8 lg:-ml-12 mt-3">
-                <img src="/white (2).png" alt="Logo" className="w-32 lg:w-36 xl:w-40 filter drop-shadow-lg" />
-              </div>
-
-              {/* Social Icons */}
-              <div>
-                <h4 className="text-sm lg:text-base font-bold mb-3 text-white">Follow Us</h4>
-                <div className="flex flex-wrap gap-2 lg:gap-3">
-                  <a href="https://www.facebook.com/grabatozae/" target="_blank" className="w-9 h-9 lg:w-10 lg:h-10 rounded-lg bg-[#e2edf4]/20 backdrop-blur-sm border border-[#e2edf4]/30 flex items-center justify-center text-[#e2edf4] hover:text-white hover:border-white hover:bg-[#e2edf4]/30 transition-all duration-300 hover:scale-110">
-                    <Facebook className="w-4 h-4 lg:w-5 lg:h-5" />
-                  </a>
-                  <a href="https://x.com/GrabAtoz" target="_blank" className="w-9 h-9 lg:w-10 lg:h-10 rounded-lg bg-[#e2edf4]/20 backdrop-blur-sm border border-[#e2edf4]/30 flex items-center justify-center text-[#e2edf4] hover:text-white hover:border-white hover:bg-[#e2edf4]/30 transition-all duration-300 hover:scale-110" aria-label="X (Twitter)">
-                    <svg viewBox="0 0 24 24" className="w-4 h-4 lg:w-5 lg:h-5 fill-current" role="img">
-                      <path d="M18.25 2h3.5l-7.66 8.73L24 22h-6.87l-5.02-6.58L6.3 22H2.8l8.2-9.34L0 2h7.04l4.54 6.02L18.25 2z" />
-                    </svg>
-                  </a>
-                  <a href="https://www.instagram.com/grabatoz/" target="_blank" className="w-9 h-9 lg:w-10 lg:h-10 rounded-lg bg-[#e2edf4]/20 backdrop-blur-sm border border-[#e2edf4]/30 flex items-center justify-center text-[#e2edf4] hover:text-white hover:border-white hover:bg-[#e2edf4]/30 transition-all duration-300 hover:scale-110">
-                    <Instagram className="w-4 h-4 lg:w-5 lg:h-5" />
-                  </a>
-                  <a href="https://www.linkedin.com/company/grabatozae" target="_blank" className="w-9 h-9 lg:w-10 lg:h-10 rounded-lg bg-[#e2edf4]/20 backdrop-blur-sm border border-[#e2edf4]/30 flex items-center justify-center text-[#e2edf4] hover:text-white hover:border-white hover:bg-[#e2edf4]/30 transition-all duration-300 hover:scale-110">
-                    <Linkedin className="w-4 h-4 lg:w-5 lg:h-5" />
-                  </a>
-                  <a href="https://www.pinterest.com/grabatoz/" target="_blank" className="w-9 h-9 lg:w-10 lg:h-10 rounded-lg bg-[#e2edf4]/20 backdrop-blur-sm border border-[#e2edf4]/30 flex items-center justify-center text-[#e2edf4] hover:text-white hover:border-white hover:bg-[#e2edf4]/30 transition-all duration-300 hover:scale-110">
-                    <FontAwesomeIcon icon={faPinterest} className="w-4 h-4 lg:w-5 lg:h-5" />
-                  </a>
-                  <a href="https://www.tiktok.com/@grabatoz" target="_blank" className="w-9 h-9 lg:w-10 lg:h-10 rounded-lg bg-[#e2edf4]/20 backdrop-blur-sm border border-[#e2edf4]/30 flex items-center justify-center text-[#e2edf4] hover:text-white hover:border-white hover:bg-[#e2edf4]/30 transition-all duration-300 hover:scale-110">
-                    <FontAwesomeIcon icon={faTiktok} className="w-4 h-4 lg:w-5 lg:h-5" />
-                  </a>
-                  <a href="https://www.youtube.com/@grabAtoZ" target="_blank" className="w-9 h-9 lg:w-10 lg:h-10 rounded-lg bg-[#e2edf4]/20 backdrop-blur-sm border border-[#e2edf4]/30 flex items-center justify-center text-[#e2edf4] hover:text-white hover:border-white hover:bg-[#e2edf4]/30 transition-all duration-300 hover:scale-110">
-                    <FontAwesomeIcon icon={faYoutube} className="w-4 h-4 lg:w-5 lg:h-5" />
-                  </a>
-                </div>
+                 <div className="flex-1 mt-5 flex justify-center">
+                <img src="/1.svg" alt="Payment Methods" className="h-8 lg:h-10 w-auto object-contain opacity-90 hover:opacity-100 transition-opacity duration-300" />
               </div>
 
-              {/* App Download */}
-              {/* <div>
-                <h4 className="text-xs lg:text-sm font-semibold mb-3 text-[#d9a82e]">Download App</h4>
-                <img src="https://res.cloudinary.com/dyfhsu5v6/image/upload/v1757938965/google_pj1cxc.webp" alt="Google Play" className="rounded-xl h-10 lg:h-12 hover:scale-105 transition-transform duration-300 cursor-pointer shadow-lg" />
-              </div> */}
-            </div>
-
-            {/* Second Row - 4 Columns: Top Categories, More Categories, Legal, Support */}
-            <div className="grid grid-cols-4 gap-6 lg:gap-8 xl:gap-10">
-              {/* Column 1 - Top Categories */}
-              <div className="col-span-1 flex flex-col">
-                <div className="mb-4 pb-2 border-b-2 border-[#d9a82e]">
-                  <h3 className="text-base lg:text-lg xl:text-xl font-bold text-white">Top Categories</h3>
-                </div>
-                <ul className="space-y-2 lg:space-y-2.5 text-white text-sm lg:text-base">
-                  {categories.slice(0, 6).map((category) => (
-                    <li key={category._id}>
-                      <Link to={generateShopURL({ parentCategory: category.name })} className="hover:translate-x-1 inline-block transition-all duration-300 relative group">
-                        <span className="relative">
-                          {category.name}
-                          <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#d9a82e] group-hover:w-full transition-all duration-300"></span>
-                        </span>
-                      </Link>
-                    </li>
-                  ))}
-                  {subCategories.slice(0, 2).map((subCategory) => (
-                    <li key={`sub-${subCategory._id}`}>
-                      <Link to={generateShopURL({
-                        parentCategory: subCategory.category?.name || '',
-                        subCategory: subCategory.name
-                      })} className="hover:translate-x-1 inline-block transition-all duration-300 relative group">
-                        <span className="relative">
-                          {subCategory.name}
-                          <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#d9a82e] group-hover:w-full transition-all duration-300"></span>
-                        </span>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
               </div>
-
-              {/* Column 2 - More Categories */}
-              <div className="col-span-1 flex flex-col">
-                <div className="mb-4 pb-2 border-b-2 border-[#d9a82e]">
-                  <h3 className="text-base lg:text-lg xl:text-xl font-bold text-white">More Categories</h3>
-                </div>
-                <ul className="space-y-2 lg:space-y-2.5 text-white text-sm lg:text-base">
-                  {categories.slice(6, 10).map((category) => (
-                    <li key={category._id}>
-                      <Link to={generateShopURL({ parentCategory: category.name })} className="hover:translate-x-1 inline-block transition-all duration-300 relative group">
-                        <span className="relative">
-                          {category.name}
-                          <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#d9a82e] group-hover:w-full transition-all duration-300"></span>
-                        </span>
-                      </Link>
-                    </li>
-                  ))}
-                  {subCategories.slice(4, 8).map((subCategory) => (
-                    <li key={`sub-${subCategory._id}`}>
-                      <Link to={generateShopURL({
-                        parentCategory: subCategory.category?.name || '',
-                        subCategory: subCategory.name
-                      })} className="hover:translate-x-1 inline-block transition-all duration-300 relative group">
-                        <span className="relative">
-                          {subCategory.name}
-                          <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#d9a82e] group-hover:w-full transition-all duration-300"></span>
-                        </span>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Column 3 - Legal */}
-              <div className="col-span-1 flex flex-col">
-                <div className="mb-4 pb-2 border-b-2 border-[#d9a82e]">
-                  <h3 className="text-base lg:text-lg xl:text-xl font-bold text-white">Legal</h3>
-                </div>
-                <ul className="space-y-2 lg:space-y-2.5 text-white text-sm lg:text-base">
-                  <li>
-                    <Link to="/refund-return" className="hover:translate-x-1 inline-block transition-all duration-300 relative group">
-                      <span className="relative">
-                        Refund and Return
-                        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#d9a82e] group-hover:w-full transition-all duration-300"></span>
-                      </span>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/cookies-policy" className="hover:translate-x-1 inline-block transition-all duration-300 relative group">
-                      <span className="relative">
-                        Cookies Policy
-                        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#d9a82e] group-hover:w-full transition-all duration-300"></span>
-                      </span>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/terms-conditions" className="hover:translate-x-1 inline-block transition-all duration-300 relative group">
-                      <span className="relative">
-                        Terms & Conditions
-                        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#d9a82e] group-hover:w-full transition-all duration-300"></span>
-                      </span>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/privacy-policy" className="hover:translate-x-1 inline-block transition-all duration-300 relative group">
-                      <span className="relative">
-                        Privacy Policy
-                        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#d9a82e] group-hover:w-full transition-all duration-300"></span>
-                      </span>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/disclaimer-policy" className="hover:translate-x-1 inline-block transition-all duration-300 relative group">
-                      <span className="relative">
-                        Disclaimer Policy
-                        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#d9a82e] group-hover:w-full transition-all duration-300"></span>
-                      </span>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/track-order" className="hover:translate-x-1 inline-block transition-all duration-300 relative group">
-                      <span className="relative">
-                        Track Order
-                        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#d9a82e] group-hover:w-full transition-all duration-300"></span>
-                      </span>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/voucher-terms" className="hover:translate-x-1 inline-block transition-all duration-300 relative group">
-                      <span className="relative">
-                        Voucher Terms
-                        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#d9a82e] group-hover:w-full transition-all duration-300"></span>
-                      </span>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/delivery-terms" className="hover:translate-x-1 inline-block transition-all duration-300 relative group">
-                      <span className="relative">
-                        Delivery Terms
-                        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#d9a82e] group-hover:w-full transition-all duration-300"></span>
-                      </span>
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-
-              {/* Column 4 - Support */}
-              <div className="col-span-1 flex flex-col">
-                <div className="mb-4 pb-2 border-b-2 border-[#d9a82e]">
-                  <h3 className="text-base lg:text-lg xl:text-xl font-bold text-white">Support</h3>
-                </div>
-                <ul className="space-y-2 lg:space-y-2.5 text-white text-sm lg:text-base">
-                  <li>
-                    <Link to="/about" className="hover:translate-x-1 inline-block transition-all duration-300 relative group">
-                      <span className="relative">
-                        About Us
-                        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#d9a82e] group-hover:w-full transition-all duration-300"></span>
-                      </span>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/contact" className="hover:translate-x-1 inline-block transition-all duration-300 relative group">
-                      <span className="relative">
-                        Contact Us
-                        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#d9a82e] group-hover:w-full transition-all duration-300"></span>
-                      </span>
-                    </Link>
-                  </li>
-                  <li>
-                    <a href="https://blog.grabatoz.ae/" rel="noopener noreferrer" className="hover:translate-x-1 inline-block transition-all duration-300 relative group">
-                      <span className="relative">
-                        Blog
-                        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#d9a82e] group-hover:w-full transition-all duration-300"></span>
-                      </span>
-                    </a>
-                  </li>
-                  <li>
-                    <Link to="/shop" className="hover:translate-x-1 inline-block transition-all duration-300 relative group">
-                      <span className="relative">
-                        Shop
-                        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#d9a82e] group-hover:w-full transition-all duration-300"></span>
-                      </span>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/login" className="hover:translate-x-1 inline-block transition-all duration-300 relative group">
-                      <span className="relative">
-                        Login
-                        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#d9a82e] group-hover:w-full transition-all duration-300"></span>
-                      </span>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/register" className="hover:translate-x-1 inline-block transition-all duration-300 relative group">
-                      <span className="relative">
-                        Register
-                        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#d9a82e] group-hover:w-full transition-all duration-300"></span>
-                      </span>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/wishlist" className="hover:translate-x-1 inline-block transition-all duration-300 relative group">
-                      <span className="relative">
-                        Wishlist
-                        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#d9a82e] group-hover:w-full transition-all duration-300"></span>
-                      </span>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/cart" className="hover:translate-x-1 inline-block transition-all duration-300  relative group">
-                      <span className="relative">
-                        Cart
-                        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#d9a82e] group-hover:w-full transition-all duration-300"></span>
-                      </span>
-                    </Link>
-                  </li>
-                </ul>
-              </div>
+              
             </div>
           </div>
         </div>
@@ -436,9 +293,9 @@ const Footer = ({ className = "" }) => {
               </div>
 
               {/* Payment Methods */}
-              <div className="flex-1 flex justify-center">
+              {/* <div className="flex-1 flex justify-center">
                 <img src="/1.svg" alt="Payment Methods" className="h-8 lg:h-10 w-auto object-contain opacity-90 hover:opacity-100 transition-opacity duration-300" />
-              </div>
+              </div> */}
 
               {/* Developer Credit */}
               <div className="flex-1 text-center md:text-right">
@@ -455,43 +312,13 @@ const Footer = ({ className = "" }) => {
 
       {/* Mobile Footer - Only visible on mobile */}
       <footer className="md:hidden bg-[#2377c1]">
-        {/* Categories Section */}
-        <div className="border-b border-white/30">
-          <button
-            onClick={() => toggleSection("categories")}
-            className="w-full flex justify-between items-center p-4 text-left group"
-          >
-            <span className="text-base font-bold text-white">Categories</span>
-            <div className={`transform transition-transform duration-300 ${openSections.categories ? 'rotate-180' : ''}`}>
-              {openSections.categories ? 
-                <Minus size={20} className="text-white" /> : 
-                <Plus size={20} className="text-white" />
-              }
-            </div>
-          </button>
-          {openSections.categories && (
-            <div className="px-4 pb-4 animate-fadeIn">
-              <ul className="space-y-3">
-                {categories.map((category) => (
-                  <li key={category._id}>
-                    <Link to={`/shop?parentCategory=${category._id}`} className="text-white hover:text-[#d9a82e] transition-colors duration-300 text-sm flex items-center group">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#d9a82e] mr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-                      {category.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </div>
-
         {/* Legal Section */}
         <div className="border-b border-white/30">
           <button
             onClick={() => toggleSection("legal")}
             className="w-full flex justify-between items-center p-4 text-left"
           >
-            <span className="text-base font-bold text-white">Legal</span>
+            <span className="text-base font-bold text-white">Support</span>
             <div className={`transform transition-transform duration-300 ${openSections.legal ? 'rotate-180' : ''}`}>
               {openSections.legal ? 
                 <Minus size={20} className="text-white" /> : 
@@ -536,76 +363,6 @@ const Footer = ({ className = "" }) => {
                   <Link to="/register" className="text-white hover:text-[#d9a82e] transition-colors duration-300 text-sm flex items-center group">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#d9a82e] mr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
                     Register
-                  </Link>
-                </li>
-              </ul>
-            </div>
-          )}
-        </div>
-
-        {/* Support Section */}
-        <div className="border-b border-white/30">
-          <button
-            onClick={() => toggleSection("support")}
-            className="w-full flex justify-between items-center p-4 text-left"
-          >
-            <span className="text-base font-bold text-white">Support</span>
-            <div className={`transform transition-transform duration-300 ${openSections.support ? 'rotate-180' : ''}`}>
-              {openSections.support ? 
-                <Minus size={20} className="text-white" /> : 
-                <Plus size={20} className="text-white" />
-              }
-            </div>
-          </button>
-          {openSections.support && (
-            <div className="px-4 pb-4 animate-fadeIn">
-              <ul className="space-y-3">
-                <li>
-                  <Link to="/refund-return" className="text-white hover:text-[#d9a82e] transition-colors duration-300 text-sm flex items-center group">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#d9a82e] mr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-                    Refund and Return
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/cookies-policy" className="text-white hover:text-[#d9a82e] transition-colors duration-300 text-sm flex items-center group">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#d9a82e] mr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-                    Cookies Policy
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/terms-conditions" className="text-white hover:text-[#d9a82e] transition-colors duration-300 text-sm flex items-center group">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#d9a82e] mr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-                    Terms & Conditions
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/privacy-policy" className="text-white hover:text-[#d9a82e] transition-colors duration-300 text-sm flex items-center group">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#d9a82e] mr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-                    Privacy Policy
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/disclaimer-policy" className="text-white hover:text-[#d9a82e] transition-colors duration-300 text-sm flex items-center group">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#d9a82e] mr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-                    Disclaimer Policy
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/track-order" className="text-white hover:text-[#d9a82e] transition-colors duration-300 text-sm flex items-center group">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#d9a82e] mr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-                    Track Order
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/wishlist" className="text-white hover:text-[#d9a82e] transition-colors duration-300 text-sm flex items-center group">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#d9a82e] mr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-                    Wishlist
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/cart" className="text-white hover:text-[#d9a82e] transition-colors duration-300 text-sm font-semibold flex items-center group">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#d9a82e] mr-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-                    Cart
                   </Link>
                 </li>
               </ul>

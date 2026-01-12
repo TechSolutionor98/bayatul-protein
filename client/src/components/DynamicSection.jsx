@@ -230,39 +230,37 @@ function ArrowSliderSection({ section, cards, settings, currentIndex, setCurrent
 
   return (
     <>
-    <div className="flex items-center justify-between mx-5 mb-2 mt-4">
-      <h2 className="text-2xl font-bold text-start text-gray-800">{section.name}</h2>
-      {/* Navigation Arrows - Inline with heading */}
+    <div className="relative flex items-center justify-center mx-5 mb-2 mt-4">
+      <h2 className="text-2xl font-bold text-center text-gray-800">{section.name}</h2>
+      {/* Navigation Arrows - Positioned on the right */}
       {showArrows && cards.length > cardsCount && (
-        <div className="flex gap-2">
+        <div className="absolute right-0 flex gap-2">
           <button
             onClick={handlePrev}
             disabled={!canGoPrev}
-            className={`border-2 rounded-lg p-2 md:p-3 transition-all group cursor-pointer 
-              ${canGoPrev ? 'bg-white border-lime-500 hover:bg-lime-500 hover:border-lime-500' : 'bg-gray-100 border-gray-300 cursor-not-allowed'}`}
+            className={`border-2 rounded-lg p-1.5 md:p-2 transition-all group cursor-pointer 
+              ${canGoPrev ? 'bg-white border-[#d9a82e] hover:bg-[#d9a82e] hover:border-[#d9a82e]' : 'bg-gray-100 border-gray-300 cursor-not-allowed'}`}
           >
             <ChevronLeft 
-              className={`w-4 h-4 md:w-6 md:h-6 transition-colors 
-                ${canGoPrev ? 'text-lime-500 group-hover:text-white' : 'text-gray-400'}`}
+              className={`w-3 h-3 md:w-5 md:h-5 transition-colors 
+                ${canGoPrev ? 'text-[#d9a82e] group-hover:text-white' : 'text-gray-400'}`}
             />
           </button>
           <button
             onClick={handleNext}
             disabled={!canGoNext}
-            className={`border-2 rounded-lg p-2 md:p-3 transition-all group cursor-pointer 
-              ${canGoNext ? 'bg-white border-lime-500 hover:bg-lime-500 hover:border-lime-500' : 'bg-gray-100 border-gray-300 cursor-not-allowed'}`}
+            className={`border-2 rounded-lg p-1.5 md:p-2 transition-all group cursor-pointer 
+              ${canGoNext ? 'bg-white border-[#d9a82e] hover:bg-[#d9a82e] hover:border-[#d9a82e]' : 'bg-gray-100 border-gray-300 cursor-not-allowed'}`}
           >
             <ChevronRight 
-              className={`w-4 h-4 md:w-6 md:h-6 transition-colors 
-                ${canGoNext ? 'text-lime-500 group-hover:text-white' : 'text-gray-400'}`}
+              className={`w-3 h-3 md:w-5 md:h-5 transition-colors 
+                ${canGoNext ? 'text-[#d9a82e] group-hover:text-white' : 'text-gray-400'}`}
             />
           </button>
         </div>
       )}
     </div>
-    {section.description && (
-      <p className="text-sm text-gray-600 mx-5 mb-4">{section.description}</p>
-    )}
+    
     <section className="py-6 md:py-12" style={{ backgroundColor }}>
       <div className="max-w-[1920px] mx-auto px-2 md:px-4">
         <div className="relative">
@@ -273,7 +271,7 @@ function ArrowSliderSection({ section, cards, settings, currentIndex, setCurrent
               <Link
                 key={card._id}
                 to={card.linkUrl || '#'}
-                className="bg-white rounded-lg border-2 border-gray-300 hover:border-gray-300 transition-all duration-300 hover:scale-105 group overflow-hidden relative flex flex-col flex-shrink-0"
+                className="bg-white rounded-lg border-2 border-[#e2edf4] hover:border-[#e2edf4] transition-all duration-300 hover:scale-105 group overflow-hidden relative flex flex-col flex-shrink-0"
                 style={{ 
                   width: `calc(${100/cardsCount}% - ${(isMobile ? 12 : 24) * (cardsCount - 1) / cardsCount}px)`,
                   minHeight: isMobile ? '240px' : '320px',
@@ -620,78 +618,64 @@ function CardsRightImageLeftSection({ section, cards, settings }) {
                     {/* First card in pair */}
                     <Link
                       to={card.linkUrl || '#'}
-                      className="p-3 hover:shadow-xl transition-all duration-300 group overflow-hidden relative flex-shrink-0 flex-1"
+                      className="rounded-xl transition-all duration-300 group overflow-hidden relative flex-shrink-0 flex-1"
                       style={{ 
                         minHeight: '280px',
                         maxHeight: '280px',
-                        display: 'flex', 
-                        flexDirection: 'column',
-                        backgroundColor: card.bgColor || '#ffffff'
                       }}
                     >
-                      {/* Text Content - Top Section */}
-                      <div className="relative z-10 flex-grow pb-2">
-                        <h3 className="text-sm font-bold mb-2 group-hover:text-gray-900 line-clamp-2 text-gray-800">
-                          {card.name}
-                        </h3>
-                        {card.details && (
-                          <p className="text-xs mb-2 line-clamp-2 text-gray-600">
-                            {card.details}
-                          </p>
-                        )}
-                        <span className="inline-flex items-center text-xs font-semibold text-blue-600">
+                      {/* Background Image */}
+                      {card.image && (
+                        <img 
+                          src={getFullImageUrl(card.image)} 
+                          alt={card.name} 
+                          className="absolute inset-0 w-full h-full object-cover"
+                        />
+                      )}
+                      
+                      {/* Content Container */}
+                      <div className="relative z-10 h-full flex flex-col justify-between p-4">
+                        <div></div>
+                        {/* Shop Now Button at Bottom-Left */}
+                        <span className="inline-flex items-center text-sm font-semibold text-gray-800 bg-[#e2edf4] hover:bg-[#d0dde6] px-4 py-2 rounded-lg transition-colors self-start">
                           Shop Now
-                          <svg className="w-3 h-3 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                           </svg>
                         </span>
                       </div>
-                      
-                      {/* Image - Fixed at Bottom */}
-                      {card.image && (
-                        <div className="relative w-full overflow-hidden rounded-lg mt-auto" style={{ height: '100px', flexShrink: 0 }}>
-                          <img src={getFullImageUrl(card.image)} alt={card.name} className="w-full h-full bg-cover" />
-                        </div>
-                      )}
                     </Link>
                     
                     {/* Second card in pair (if exists) */}
                     {nextCard && (
                       <Link
                         to={nextCard.linkUrl || '#'}
-                        className="p-3 hover:shadow-xl transition-all duration-300 group overflow-hidden relative flex-shrink-0 flex-1"
+                        className="rounded-xl transition-all duration-300 group overflow-hidden relative flex-shrink-0 flex-1"
                         style={{ 
                           minHeight: '280px',
                           maxHeight: '280px',
-                          display: 'flex', 
-                          flexDirection: 'column',
-                          backgroundColor: nextCard.bgColor || '#ffffff'
                         }}
                       >
-                        {/* Text Content - Top Section */}
-                        <div className="relative z-10 flex-grow pb-2">
-                          <h3 className="text-sm font-bold mb-2 group-hover:text-gray-900 line-clamp-2 text-gray-800">
-                            {nextCard.name}
-                          </h3>
-                          {nextCard.details && (
-                            <p className="text-xs mb-2 line-clamp-2 text-gray-600">
-                              {nextCard.details}
-                            </p>
-                          )}
-                          <span className="inline-flex items-center text-xs font-semibold text-blue-600">
+                        {/* Background Image */}
+                        {nextCard.image && (
+                          <img 
+                            src={getFullImageUrl(nextCard.image)} 
+                            alt={nextCard.name} 
+                            className="absolute inset-0 w-full h-full object-cover"
+                          />
+                        )}
+                        
+                        {/* Content Container */}
+                        <div className="relative z-10 h-full flex flex-col justify-between p-4">
+                          <div></div>
+                          {/* Shop Now Button at Bottom-Left */}
+                          <span className="inline-flex items-center text-sm font-semibold text-gray-800 bg-[#e2edf4] hover:bg-[#d0dde6] px-4 py-2 rounded-lg transition-colors self-start">
                             Shop Now
-                            <svg className="w-3 h-3 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                             </svg>
                           </span>
                         </div>
-                        
-                        {/* Image - Fixed at Bottom */}
-                        {nextCard.image && (
-                          <div className="relative w-full overflow-hidden rounded-lg mt-auto" style={{ height: '100px', flexShrink: 0 }}>
-                            <img src={getFullImageUrl(nextCard.image)} alt={nextCard.name} className="w-full h-full bg-cover" />
-                          </div>
-                        )}
                       </Link>
                     )}
                   </div>
@@ -735,46 +719,38 @@ function CardsRightImageLeftSection({ section, cards, settings }) {
           <div className="col-span-8 grid grid-cols-3 gap-6">
             {cardsToShow.map((card, index) => {
               const isCenterCard = index === 1 // Middle card
-              const cardBgColor = card.bgColor || '#ffffff' // Use bgColor from card model
               return (
                 <Link
                   key={`${card._id}-${currentIndex}-${index}`}
                   to={card.linkUrl || '#'}
-                  className={`p-4 hover:shadow-xl transition-all duration-500 group overflow-hidden relative ${
-                    isCenterCard ? 'scale-105 shadow-xl z-10' : 'hover:scale-105'
+                  className={`rounded-xl transition-all duration-500 group overflow-hidden relative ${
+                    isCenterCard ? 'scale-105 z-10' : 'hover:scale-105'
                   }`}
                   style={{ 
                     minHeight: '320px', 
                     maxHeight: '320px', 
-                    display: 'flex', 
-                    flexDirection: 'column',
-                    backgroundColor: cardBgColor
                   }}
                 >
-                  {/* Text Content - Top Section */}
-                  <div className="relative z-10 flex-grow pb-2">
-                    <h3 className="text-lg font-bold mb-2 group-hover:text-gray-900 line-clamp-2 text-gray-800">
-                      {card.name}
-                    </h3>
-                    {card.details && (
-                      <p className="text-xs mb-3 line-clamp-3 text-gray-600">
-                        {card.details}
-                      </p>
-                    )}
-                    <span className="inline-flex items-center text-sm font-semibold text-blue-600">
+                  {/* Background Image */}
+                  {card.image && (
+                    <img 
+                      src={getFullImageUrl(card.image)} 
+                      alt={card.name} 
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                  )}
+                  
+                  {/* Content Container */}
+                  <div className="relative z-10 h-full flex flex-col justify-between p-5">
+                    <div></div>
+                    {/* Shop Now Button at Bottom-Left */}
+                    <span className="inline-flex items-center text-sm font-semibold text-gray-800 bg-[#e2edf4] hover:bg-[#d0dde6] px-5 py-2.5 rounded-lg transition-colors self-start">
                       Shop Now
-                      <svg className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                       </svg>
                     </span>
                   </div>
-                  
-                  {/* Image - Fixed at Bottom */}
-                  {card.image && (
-                    <div className="relative w-full overflow-hidden rounded-lg mt-auto" style={{ height: '120px', flexShrink: 0 }}>
-                      <img src={getFullImageUrl(card.image)} alt={card.name} className="w-full h-full bg-cover" />
-                    </div>
-                  )}
                 </Link>
               )
             })}

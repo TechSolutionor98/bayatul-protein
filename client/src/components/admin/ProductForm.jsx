@@ -1494,7 +1494,7 @@ const ProductForm = ({ product, onSubmit, onCancel }) => {
               onChange={handleInputChange}
               className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
             />
-            <label className="text-sm text-gray-700">Featured</label>
+            <label className="text-sm text-gray-700">Premium Products</label>
           </div>
 
           <div className="flex items-center space-x-2">

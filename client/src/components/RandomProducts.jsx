@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
+import { Heart } from "lucide-react"
 import axios from "axios"
 import config from "../config/config"
 import { getImageUrl } from "../utils/imageUtils"
+import { useWishlist } from "../context/WishlistContext"
 
 // Status badge color helper (consistent with BigSaleSection)
 const getStatusColor = (status) => {
@@ -41,7 +43,23 @@ const getPriceInfo = (p) => {
 }
 
 const ProductCard = ({ product }) => {
+  const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist()
+  const [isWishlisted, setIsWishlisted] = useState(false)
   const href = product?.slug || product?._id ? `/product/${product.slug || product._id}` : "#"
+
+  useEffect(() => {
+    setIsWishlisted(isInWishlist(product._id))
+  }, [isInWishlist, product._id])
+
+  const handleWishlistToggle = (e) => {
+    e.preventDefault()
+    if (isWishlisted) {
+      removeFromWishlist(product._id)
+    } else {
+      addToWishlist(product)
+    }
+    setIsWishlisted(!isWishlisted)
+  }
 
   // Prices
   const { current, old, hasDiscount } = getPriceInfo(product)
@@ -99,6 +117,20 @@ const ProductCard = ({ product }) => {
               </div>
             )}
           </div>
+
+          {/* Wishlist Icon */}
+          <button
+            onClick={handleWishlistToggle}
+            className="absolute right-3 top-3 w-8 h-8 rounded-full bg-white flex items-center justify-center hover:bg-gray-50 transition-all z-10"
+            aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
+          >
+            <Heart
+              size={18}
+              className={`transition-colors ${
+                isWishlisted ? "fill-red-500 text-red-500" : "text-gray-600"
+              }`}
+            />
+          </button>
         </div>
       </Link>
 
@@ -242,7 +274,7 @@ function RandomProducts() {
         {/* Section Title */}
         <div className="mb-8 text-center">
           <h2 className="text-2xl md:text-3xl font-bold text-black">
-            Products
+            Most Selling Products 
           </h2>
           
         </div>

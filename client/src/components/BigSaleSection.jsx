@@ -60,7 +60,7 @@ const ProductCard = ({ product }) => {
         </Link>
 
         {/* Wishlist icon */}
-        {/* <button
+        <button
           className="absolute top-3 right-3 text-gray-400 hover:text-red-500"
           onClick={(e) => {
             e.preventDefault()
@@ -73,7 +73,7 @@ const ProductCard = ({ product }) => {
             size={14}
             className={isInWishlist(product._id) ? "text-red-500 fill-red-500" : "text-gray-400"}
           />
-        </button> */}
+        </button>
 
         {/* Status + discount badges */}
         <div className="absolute left-3 top-3 flex flex-col gap-1">
@@ -175,7 +175,7 @@ const BigSaleSection = ({ products = [] }) => {
     <section className="py-8 md:py-10 bg-white">
       <div className="max-w-8xl mx-auto px-4 md:px-6 lg:px-8">
         <div className="mb-6 flex items-center justify-between">
-          <h2 className="text-xl md:text-2xl font-bold text-gray-900">Big Sale</h2>
+          <h2 className="text-xl md:text-2xl font-bold text-gray-900">Premium Products</h2>
           <div className="flex items-center gap-2">
             <button
               onClick={handlePrev}

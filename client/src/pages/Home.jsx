@@ -34,6 +34,7 @@ import SEO from "../components/SEO"
 import DynamicSection from "../components/DynamicSection"
 import RandomProducts from "../components/RandomProducts"
 import config from "../config/config"
+import LegalSection from "../components/LegalSection"
 
 const API_BASE_URL = `${config.API_URL}`
 
@@ -1061,11 +1062,11 @@ const Home = () => {
         <img src="https://res.cloudinary.com/dyfhsu5v6/image/upload/v1757761484/tamara_tabby_kooxbn.webp" alt="" className="w-full  sm:mx-4 h-auto rounded-lg" />
       </div> */}
 
-      {/* Dynamic Section Position 1 */}
-      {/* {renderDynamicSection(1)} */}
+      
       {/* Big Sale Section - Handles both mobile and desktop views */}
       <BigSaleSection products={featuredProducts} />
-      
+       {/* Dynamic Section Position 1 */}
+      {renderDynamicSection(1)}
       <div className="mx-8 my-4">
         <img src="/Untitled-design-6.svg" alt="image" className="w-full h-auto rounded-lg" />
       </div>
@@ -1089,7 +1090,7 @@ const Home = () => {
 
 
       {/* Dynamic Section Position 2 */}
-      {/* {renderDynamicSection(2)} */}
+      {renderDynamicSection(2)}
 
 
 
@@ -1347,7 +1348,7 @@ const Home = () => {
       </section> */}
 
       {/* Dynamic Section Position 5 */}
-      {/* {renderDynamicSection(5)} */}
+      {renderDynamicSection(5)}
 
       {/* Networking Banner - Desktop/Mobile Responsive */}
       {/* <div className="mx-3 my-4 h-[160px] lg:h-[300px]">
@@ -1606,6 +1607,7 @@ const Home = () => {
            {/* Dynamic Section Position 8 */}
       {/* {renderDynamicSection(8)}
   */}
+  
       {/* Upgrade Features Section - Responsive */}
       {/* {upgradeFeatures.length > 0 && (
         <section className="py-8 md:py-12 bg-gradient-to-br from-blue-50 to-indigo-100 mx-3 rounded-lg my-8">
@@ -1628,7 +1630,8 @@ const Home = () => {
 
       {/* Dynamic Section Position 9 */}
       {/* {renderDynamicSection(9)} */}
-
+        {/* Dynamic Section Position 8 */}
+     {/* {renderDynamicSection(8)} */}
       {/* Featured Brands Section - Use BrandSlider component */}
       {(brands.length > 0 || categories.length > 0) && (
         <BrandSlider 
@@ -1642,6 +1645,7 @@ const Home = () => {
       {/* Dynamic Section Position 10 */}
       {/* {renderDynamicSection(10)} */}
 
+ <LegalSection />
       {/* Core Service Section - Responsive: Desktop(4 in row), Mobile(2x2 grid) */}
       {/* <section className="py-8 md:py-10 bg-white mt-2">
         <div className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16">
