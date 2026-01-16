@@ -292,14 +292,20 @@ const Navbar = () => {
                 </Link>
               </div>
 
-              <div className="col-span-4 flex items-center justify-end gap-5 text-gray-800">
-                <button onClick={handleMobileSearchOpen} aria-label="Open search" className="w-10 h-10 flex items-center justify-center">
+              <div className="col-span-4 flex items-center justify-end gap-4 text-gray-800">
+                <button onClick={handleMobileSearchOpen} aria-label="Open search" className="w-10 h-10 flex items-center justify-center hover:text-[#2377c1] transition-colors">
                   <Search size={22} />
                 </button>
+                <Link to="/wishlist" className="relative w-10 h-10 flex items-center justify-center hover:text-[#2377c1] transition-colors" aria-label="Wishlist">
+                  <Heart size={22} />
+                  {wishlist.length > 0 && (
+                    <span className="absolute -top-1 -right-1 bg-[#d9a82e] text-white text-[10px] leading-none rounded-full h-5 w-5 flex items-center justify-center font-bold">{wishlist.length}</span>
+                  )}
+                </Link>
                 <div className="relative">
                   <button
                     onClick={() => setIsProfileOpen((s) => !s)}
-                    className="w-10 h-10 flex items-center justify-center"
+                    className="w-10 h-10 flex items-center justify-center hover:text-[#2377c1] transition-colors"
                     ref={profileButtonRef}
                     aria-label="Account"
                   >
@@ -325,9 +331,11 @@ const Navbar = () => {
                     </div>
                   )}
                 </div>
-                <Link to="/cart" className="relative w-10 h-10 flex items-center justify-center" aria-label="Cart">
+                <Link to="/cart" className="relative w-10 h-10 flex items-center justify-center hover:text-[#2377c1] transition-colors" aria-label="Cart">
                   <ShoppingCart size={22} />
-                  <span className="absolute -top-1 -right-1 bg-[#d9a82e] text-white text-[10px] leading-none rounded-full h-5 w-5 flex items-center justify-center font-bold">{cartCount}</span>
+                  {cartCount > 0 && (
+                    <span className="absolute -top-1 -right-1 bg-[#d9a82e] text-white text-[10px] leading-none rounded-full h-5 w-5 flex items-center justify-center font-bold">{cartCount}</span>
+                  )}
                 </Link>
               </div>
             </div>

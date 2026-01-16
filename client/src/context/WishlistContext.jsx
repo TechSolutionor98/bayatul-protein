@@ -58,35 +58,50 @@ export const WishlistProvider = ({ children }) => {
   // Add product to wishlist
   const addToWishlist = async (product) => {
     console.log('[Wishlist] Adding to wishlist:', product)
+    
+    // Optimistic update - update UI immediately
+    setWishlist(prev => {
+      if (prev.find(item => item._id === product._id)) return prev
+      return [...prev, product]
+    })
+    showToast && showToast("Added to wishlist", "success")
+    
+    // Then sync with backend if authenticated
     if (isAuthenticated && user) {
-      const token = localStorage.getItem("token")
-      const { data } = await axios.post(`${config.API_URL}/api/wishlist`, { productId: product._id }, { headers: { Authorization: `Bearer ${token}` } })
-      console.log('[Wishlist] Backend add response:', data)
-      setWishlist(data)
-      showToast && showToast("Added to wishlist", "success")
-    } else {
-      setWishlist(prev => {
-        if (prev.find(item => item._id === product._id)) return prev
-        showToast && showToast("Added to wishlist", "success")
-        return [...prev, product]
-      })
+      try {
+        const token = localStorage.getItem("token")
+        const { data } = await axios.post(`${config.API_URL}/api/wishlist`, { productId: product._id }, { headers: { Authorization: `Bearer ${token}` } })
+        console.log('[Wishlist] Backend add response:', data)
+        setWishlist(data)
+      } catch (error) {
+        console.error('[Wishlist] Error adding to backend:', error)
+        // Revert optimistic update on error
+        setWishlist(prev => prev.filter(item => item._id !== product._id))
+        showToast && showToast("Failed to add to wishlist", "error")
+      }
     }
   }
 
   // Remove product from wishlist
   const removeFromWishlist = async (productId) => {
     console.log('[Wishlist] Removing from wishlist:', productId)
+    
+    // Optimistic update - update UI immediately
+    setWishlist(prev => prev.filter(item => item._id !== productId))
+    showToast && showToast("Removed from wishlist", "info")
+    
+    // Then sync with backend if authenticated
     if (isAuthenticated && user) {
-      const token = localStorage.getItem("token")
-      const { data } = await axios.delete(`${config.API_URL}/api/wishlist/${productId}`, { headers: { Authorization: `Bearer ${token}` } })
-      console.log('[Wishlist] Backend remove response:', data)
-      setWishlist(data)
-      showToast && showToast("Removed from wishlist", "info")
-    } else {
-      setWishlist(prev => {
-        showToast && showToast("Removed from wishlist", "info")
-        return prev.filter(item => item._id !== productId)
-      })
+      try {
+        const token = localStorage.getItem("token")
+        const { data } = await axios.delete(`${config.API_URL}/api/wishlist/${productId}`, { headers: { Authorization: `Bearer ${token}` } })
+        console.log('[Wishlist] Backend remove response:', data)
+        setWishlist(data)
+      } catch (error) {
+        console.error('[Wishlist] Error removing from backend:', error)
+        // Note: Not reverting on error as the item is already removed from UI
+        // The backend will be in sync on next page load
+      }
     }
   }
 

@@ -113,10 +113,8 @@ const ProductCard = ({ product, offerPageName, cardIndex }) => {
             e.stopPropagation()
             if (isInWishlist(product._id)) {
               removeFromWishlist(product._id)
-              showToast && showToast("Removed from wishlist", "info")
             } else {
               addToWishlist(product)
-              showToast && showToast("Added to wishlist", "success")
             }
           }}
           aria-label={isInWishlist(product._id) ? "Remove from wishlist" : "Add to wishlist"}
