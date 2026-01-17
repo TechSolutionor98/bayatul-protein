@@ -44,12 +44,12 @@ const getMailConfig = (type) => {
   if (type === "order") {
     return {
       transporter: orderTransporter,
-      from: `Graba2z Orders <${process.env.ORDER_EMAIL_USER}>`,
+      from: `Baytal Protien Orders <${process.env.ORDER_EMAIL_USER}>`,
     }
   } else {
     return {
       transporter: supportTransporter,
-      from: `Graba2z Support <${process.env.SUPPORT_EMAIL_USER}>`,
+      from: `Baytal Protien Support <${process.env.SUPPORT_EMAIL_USER}>`,
     }
   }
 }
@@ -396,14 +396,14 @@ const getEmailTemplate = (type, data) => {
         <body>
           <div class="container">
             <div class="header">
-              <a href="https://www.graba2z.ae/" target="_blank">
-                <img src="https://res.cloudinary.com/dyfhsu5v6/image/upload/v1753105567/admin-logo_ruxcjj.png" alt="Graba2z Logo" />
+              <a href="https://baytalProtien.net/" target="_blank">
+                <img src="https://res.cloudinary.com/dyyb62prf/image/upload/v1761983430/logoblue_uplb3m.webp" alt="Baytal Protien Logo" />
               </a>
             </div>
             <div class="content">
               <h2>Email Verification</h2>
               <p>Hi <b>${data.name || "User"}</b>,<br />
-              Thank you for registering with Graba2z. Please verify your email address by entering the verification code below:</p>
+              Thank you for registering with Baytal Protien. Please verify your email address by entering the verification code below:</p>
               <div class="code-box">${data.code || "000000"}</div>
               <p style="margin: 16px 0 0 0; color: #1abc7b; font-weight: bold;">
                 Copy the code above and paste it on the website to verify your email.
@@ -411,19 +411,11 @@ const getEmailTemplate = (type, data) => {
               <p style="margin-top: 2em; color: #888; font-size: 1em;">This code will expire in 10 minutes.<br />If you didn't create an account with us, please ignore this email.</p>
             </div>
             <div class="footer">
-              <div class="socials">
-                <a href="https://www.facebook.com/grabatozae/" target="_blank"><img src="https://res.cloudinary.com/dyfhsu5v6/image/upload/v1753107123/WhatsApp_Image_2025-07-21_at_7.10.18_AM_1_axvzvv.jpg" alt="Facebook" style="width:32px;height:32px;margin:0 10px;vertical-align:middle;background:transparent;border-radius:8px;box-shadow:none;" /></a>
-                <a href="https://www.instagram.com/grabatoz/" target="_blank"><img src="https://res.cloudinary.com/dyfhsu5v6/image/upload/v1753107124/WhatsApp_Image_2025-07-21_at_7.10.18_AM_xgjv5f.jpg" alt="Instagram" style="width:32px;height:32px;margin:0 10px;vertical-align:middle;background:transparent;border-radius:8px;box-shadow:none;" /></a>
-                <a href="https://x.com/GrabAtoz" target="_blank"><img src="https://res.cloudinary.com/dyfhsu5v6/image/upload/v1753107545/WhatsApp_Image_2025-07-21_at_7.10.18_AM_2_cwzjg6.png" alt="X" style="width:32px;height:32px;margin:0 10px;vertical-align:middle;background:transparent;border-radius:8px;box-shadow:none;" /></a>
-                <a href="https://www.linkedin.com/company/grabatozae" target="_blank"><img src="https://res.cloudinary.com/dyfhsu5v6/image/upload/v1753107123/WhatsApp_Image_2025-07-21_at_7.10.18_AM_3_ll6y2i.jpg" alt="LinkedIn" style="width:32px;height:32px;margin:0 10px;vertical-align:middle;background:transparent;border-radius:8px;box-shadow:none;" /></a>
-              </div>
-              <p>This email was sent by: support@grabatoz.ae</p>
-              <br/>
-              <p>Kindly Do Not Reply to this Email</p>
+              <p>For support, contact us at: <a href="mailto:info@baytalProtien.net" style="color:#2377c1;">info@baytalProtien.net</a></p>
               <br/>
               <div style="margin-top: 10px; color: #888;">
-                &copy; 2025 Graba2z. All rights reserved.<br />
-                <span style="font-size:12px;">If you did not enter this email address when signing up for Graba2z, disregard this message.</span>
+                &copy; 2025 Baytal Protien. All rights reserved.<br />
+                <span style="font-size:12px;">If you did not enter this email address when signing up for Baytal Protien, disregard this message.</span>
               </div>
             </div>
           </div>
@@ -689,8 +681,8 @@ const getEmailTemplate = (type, data) => {
         <body>
           <div class="container">
             <div class="header">
-              <a href="https://www.graba2z.ae/" target="_blank">
-                <img src="https://res.cloudinary.com/dyfhsu5v6/image/upload/v1753105567/admin-logo_ruxcjj.png" alt="Graba2z Logo" />
+               <a href="https://baytalProtien.net/" target="_blank">
+                <img src="https://res.cloudinary.com/dyyb62prf/image/upload/v1761983430/logoblue_uplb3m.webp" alt="Baytal Protien Logo" />
               </a>
             </div>
             <div class="content">
@@ -705,25 +697,17 @@ const getEmailTemplate = (type, data) => {
               </div>
               <div style="text-align:center;margin-top:16px;">
                 <a href="https://www.graba2z.ae/track-order" 
-                   style="display:inline-block;background:#84cc16;color:#ffffff;text-decoration:none;padding:14px 32px;font-size:14px;font-weight:600;border-radius:28px;letter-spacing:0.5px;font-family:'Segoe UI',Tahoma,Arial,sans-serif;">
+                   style="display:inline-block;background:#2377c1;color:#ffffff;text-decoration:none;padding:14px 32px;font-size:14px;font-weight:600;border-radius:28px;letter-spacing:0.5px;font-family:'Segoe UI',Tahoma,Arial,sans-serif;">
                   TRACK YOUR ORDER
                 </a>
               </div>
             </div>
             <div class="footer">
-              <div class="socials">
-                <a href="https://www.facebook.com/grabatozae/" target="_blank"><img src="https://res.cloudinary.com/dyfhsu5v6/image/upload/v1753107123/WhatsApp_Image_2025-07-21_at_7.10.18_AM_1_axvzvv.jpg" alt="Facebook" style="width:32px;height:32px;margin:0 10px;vertical-align:middle;background:transparent;border-radius:8px;box-shadow:none;" /></a>
-                <a href="https://www.instagram.com/grabatoz/" target="_blank"><img src="https://res.cloudinary.com/dyfhsu5v6/image/upload/v1753107124/WhatsApp_Image_2025-07-21_at_7.10.18_AM_xgjv5f.jpg" alt="Instagram" style="width:32px;height:32px;margin:0 10px;vertical-align:middle;background:transparent;border-radius:8px;box-shadow:none;" /></a>
-                <a href="https://x.com/GrabAtoz" target="_blank"><img src="https://res.cloudinary.com/dyfhsu5v6/image/upload/v1753107545/WhatsApp_Image_2025-07-21_at_7.10.18_AM_2_cwzjg6.png" alt="X" style="width:32px;height:32px;margin:0 10px;vertical-align:middle;background:transparent;border-radius:8px;box-shadow:none;" /></a>
-                <a href="https://www.linkedin.com/company/grabatozae" target="_blank"><img src="https://res.cloudinary.com/dyfhsu5v6/image/upload/v1753107123/WhatsApp_Image_2025-07-21_at_7.10.18_AM_3_ll6y2i.jpg" alt="LinkedIn" style="width:32px;height:32px;margin:0 10px;vertical-align:middle;background:transparent;border-radius:8px;box-shadow:none;" /></a>
-              </div>
-              <p>This email was sent by: order@grabatoz.ae</p>
-              <br/>
-              <p>Kindly Do Not Reply to this Email</p>
+              <p>For support, contact us at: <a href="mailto:info@baytalProtien.net" style="color:#2377c1;">info@baytalProtien.net</a></p>
               <br/>
               <div style="margin-top: 10px; color: #888;">
-                &copy; 2025 Graba2z. All rights reserved.<br />
-                <span style="font-size:12px;">If you did not enter this email address when signing up for Graba2z, disregard this message.</span>
+                &copy; 2025 Baytal Protien. All rights reserved.<br />
+                <span style="font-size:12px;">If you did not place this order, please contact us immediately.</span>
               </div>
             </div>
           </div>
@@ -937,8 +921,8 @@ const getEmailTemplate = (type, data) => {
         <body>
           <div class="container">
             <div class="header">
-              <a href="https://www.graba2z.ae/" target="_blank">
-                <img src="https://res.cloudinary.com/dyfhsu5v6/image/upload/v1753105567/admin-logo_ruxcjj.png" alt="Graba2z Logo" />
+              <a href="https://baytalProtien.net/" target="_blank">
+                <img src="https://res.cloudinary.com/dyyb62prf/image/upload/v1761983430/logoblue_uplb3m.webp" alt="Baytal Protien Logo" />
               </a>
             </div>
             <div class="content">
@@ -964,25 +948,17 @@ const getEmailTemplate = (type, data) => {
               ` : ''}
               <div style="text-align:center;margin-top:16px;">
                 <a href="https://www.graba2z.ae/track-order" 
-                   style="display:inline-block;background:#84cc16;color:#ffffff;text-decoration:none;padding:14px 32px;font-size:14px;font-weight:600;border-radius:28px;letter-spacing:0.5px;font-family:'Segoe UI',Tahoma,Arial,sans-serif;">
+                   style="display:inline-block;background:#2377c1;color:#ffffff;text-decoration:none;padding:14px 32px;font-size:14px;font-weight:600;border-radius:28px;letter-spacing:0.5px;font-family:'Segoe UI',Tahoma,Arial,sans-serif;">
                   TRACK YOUR ORDER
                 </a>
               </div>
             </div>
             <div class="footer">
-              <div class="socials">
-                <a href="https://www.facebook.com/grabatozae/" target="_blank"><img src="https://res.cloudinary.com/dyfhsu5v6/image/upload/v1753107123/WhatsApp_Image_2025-07-21_at_7.10.18_AM_1_axvzvv.jpg" alt="Facebook" style="width:32px;height:32px;margin:0 10px;vertical-align:middle;background:transparent;border-radius:8px;box-shadow:none;" /></a>
-                <a href="https://www.instagram.com/grabatoz/" target="_blank"><img src="https://res.cloudinary.com/dyfhsu5v6/image/upload/v1753107124/WhatsApp_Image_2025-07-21_at_7.10.18_AM_xgjv5f.jpg" alt="Instagram" style="width:32px;height:32px;margin:0 10px;vertical-align:middle;background:transparent;border-radius:8px;box-shadow:none;" /></a>
-                <a href="https://x.com/GrabAtoz" target="_blank"><img src="https://res.cloudinary.com/dyfhsu5v6/image/upload/v1753107545/WhatsApp_Image_2025-07-21_at_7.10.18_AM_2_cwzjg6.png" alt="X" style="width:32px;height:32px;margin:0 10px;vertical-align:middle;background:transparent;border-radius:8px;box-shadow:none;" /></a>
-                <a href="https://www.linkedin.com/company/grabatozae" target="_blank"><img src="https://res.cloudinary.com/dyfhsu5v6/image/upload/v1753107123/WhatsApp_Image_2025-07-21_at_7.10.18_AM_3_ll6y2i.jpg" alt="LinkedIn" style="width:32px;height:32px;margin:0 10px;vertical-align:middle;background:transparent;border-radius:8px;box-shadow:none;" /></a>
-              </div>
-              <p>This email was sent by: order@grabatoz.ae</p>
-              <br/>
-              <p>Kindly Do Not Reply to this Email</p>
+              <p>For support, contact us at: <a href="mailto:info@baytalProtien.net" style="color:#2377c1;">info@baytalProtien.net</a></p>
               <br/>
               <div style="margin-top: 10px; color: #888;">
-                &copy; 2025 Graba2z. All rights reserved.<br />
-                <span style="font-size:12px;">If you did not enter this email address when signing up for Graba2z, disregard this message.</span>
+                &copy; 2025 Baytal Protien. All rights reserved.<br />
+                <span style="font-size:12px;">If you did not place this order, please contact us immediately.</span>
               </div>
             </div>
           </div>
@@ -1112,15 +1088,15 @@ const getEmailTemplate = (type, data) => {
         <body>
           <div class="container">
             <div class="header">
-              <a href="https://www.graba2z.ae/" target="_blank">
-                <img src="https://res.cloudinary.com/dyfhsu5v6/image/upload/v1753105567/admin-logo_ruxcjj.png" alt="Graba2z Logo" />
+              <a href="https://baytalProtien.net/" target="_blank">
+                <img src="https://res.cloudinary.com/dyyb62prf/image/upload/v1761983430/logoblue_uplb3m.webp" alt="Baytal Protien Logo" />
               </a>
               <div class="warning-icon">⚠️</div>
             </div>
             <div class="content">
               <h2>Account Deletion Request</h2>
               <p>Hi <b>${data.name || "User"}</b>,<br />
-              We received a request to permanently delete your Graba2z account. If you want to proceed, please enter the verification code below:</p>
+              We received a request to permanently delete your Baytal Protien account. If you want to proceed, please enter the verification code below:</p>
               <div class="code-box">${data.code || "000000"}</div>
               <div class="warning-box">
                 <strong>⚠️ Warning:</strong> This action is permanent and cannot be undone. Once your account is deleted:
@@ -1137,18 +1113,10 @@ const getEmailTemplate = (type, data) => {
               <p style="margin-top: 2em; color: #888; font-size: 1em;">This code will expire in 10 minutes.<br />If you didn't request account deletion, please ignore this email and secure your account immediately.</p>
             </div>
             <div class="footer">
-              <div class="socials">
-                <a href="https://www.facebook.com/grabatozae/" target="_blank"><img src="https://res.cloudinary.com/dyfhsu5v6/image/upload/v1753107123/WhatsApp_Image_2025-07-21_at_7.10.18_AM_1_axvzvv.jpg" alt="Facebook" style="width:32px;height:32px;margin:0 10px;vertical-align:middle;background:transparent;border-radius:8px;box-shadow:none;" /></a>
-                <a href="https://www.instagram.com/grabatoz/" target="_blank"><img src="https://res.cloudinary.com/dyfhsu5v6/image/upload/v1753107124/WhatsApp_Image_2025-07-21_at_7.10.18_AM_xgjv5f.jpg" alt="Instagram" style="width:32px;height:32px;margin:0 10px;vertical-align:middle;background:transparent;border-radius:8px;box-shadow:none;" /></a>
-                <a href="https://x.com/GrabAtoz" target="_blank"><img src="https://res.cloudinary.com/dyfhsu5v6/image/upload/v1753107545/WhatsApp_Image_2025-07-21_at_7.10.18_AM_2_cwzjg6.png" alt="X" style="width:32px;height:32px;margin:0 10px;vertical-align:middle;background:transparent;border-radius:8px;box-shadow:none;" /></a>
-                <a href="https://www.linkedin.com/company/grabatozae" target="_blank"><img src="https://res.cloudinary.com/dyfhsu5v6/image/upload/v1753107123/WhatsApp_Image_2025-07-21_at_7.10.18_AM_3_ll6y2i.jpg" alt="LinkedIn" style="width:32px;height:32px;margin:0 10px;vertical-align:middle;background:transparent;border-radius:8px;box-shadow:none;" /></a>
-              </div>
-              <p>This email was sent by: support@grabatoz.ae</p>
-              <br/>
-              <p>Kindly Do Not Reply to this Email</p>
+              <p>For support, contact us at: <a href="mailto:info@baytalProtien.net" style="color:#2377c1;">info@baytalProtien.net</a></p>
               <br/>
               <div style="margin-top: 10px; color: #888;">
-                &copy; 2025 Graba2z. All rights reserved.<br />
+                &copy; 2025 Baytal Protien. All rights reserved.<br />
                 <span style="font-size:12px;">If you did not request account deletion, please secure your account immediately.</span>
               </div>
             </div>
@@ -1262,8 +1230,8 @@ const getEmailTemplate = (type, data) => {
         <body>
           <div class="container">
             <div class="header">
-              <a href="https://www.graba2z.ae/" target="_blank">
-                <img src="https://res.cloudinary.com/dyfhsu5v6/image/upload/v1753105567/admin-logo_ruxcjj.png" alt="Graba2z Logo" />
+              <a href="https://baytalProtien.net/" target="_blank">
+                <img src="https://res.cloudinary.com/dyyb62prf/image/upload/v1761983430/logoblue_uplb3m.webp" alt="Baytal Protien Logo" />
               </a>
             </div>
             <div class="content">
@@ -1282,19 +1250,11 @@ const getEmailTemplate = (type, data) => {
               <p style="margin-top: 2em; color: #888; font-size: 1em;">This code will expire in 10 minutes.<br />If you didn't submit this review, please ignore this email.</p>
             </div>
             <div class="footer">
-              <div class="socials">
-                <a href="https://www.facebook.com/grabatozae/" target="_blank"><img src="https://res.cloudinary.com/dyfhsu5v6/image/upload/v1753107123/WhatsApp_Image_2025-07-21_at_7.10.18_AM_1_axvzvv.jpg" alt="Facebook" style="width:32px;height:32px;margin:0 10px;vertical-align:middle;background:transparent;border-radius:8px;box-shadow:none;" /></a>
-                <a href="https://www.instagram.com/grabatoz/" target="_blank"><img src="https://res.cloudinary.com/dyfhsu5v6/image/upload/v1753107124/WhatsApp_Image_2025-07-21_at_7.10.18_AM_xgjv5f.jpg" alt="Instagram" style="width:32px;height:32px;margin:0 10px;vertical-align:middle;background:transparent;border-radius:8px;box-shadow:none;" /></a>
-                <a href="https://x.com/GrabAtoz" target="_blank"><img src="https://res.cloudinary.com/dyfhsu5v6/image/upload/v1753107545/WhatsApp_Image_2025-07-21_at_7.10.18_AM_2_cwzjg6.png" alt="X" style="width:32px;height:32px;margin:0 10px;vertical-align:middle;background:transparent;border-radius:8px;box-shadow:none;" /></a>
-                <a href="https://www.linkedin.com/company/grabatozae" target="_blank"><img src="https://res.cloudinary.com/dyfhsu5v6/image/upload/v1753107123/WhatsApp_Image_2025-07-21_at_7.10.18_AM_3_ll6y2i.jpg" alt="LinkedIn" style="width:32px;height:32px;margin:0 10px;vertical-align:middle;background:transparent;border-radius:8px;box-shadow:none;" /></a>
-              </div>
-              <p>This email was sent by: support@grabatoz.ae</p>
-              <br/>
-              <p>Kindly Do Not Reply to this Email</p>
+              <p>For support, contact us at: <a href="mailto:info@baytalProtien.net" style="color:#2377c1;">info@baytalProtien.net</a></p>
               <br/>
               <div style="margin-top: 10px; color: #888;">
-                &copy; 2025 Graba2z. All rights reserved.<br />
-                <span style="font-size:12px;">If you did not submit this review, disregard this message.</span>
+                &copy; 2025 Baytal Protien. All rights reserved.<br />
+                <span style="font-size:12px;">If you did not submit this review, please contact us immediately.</span>
               </div>
             </div>
           </div>
@@ -1309,30 +1269,22 @@ const getEmailTemplate = (type, data) => {
         <head>
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <title>Graba2z</title>
+          <title>Baytal Protien</title>
           ${baseStyle}
         </head>
         <body>
           <div class="email-container">
             <div class="header">
-              <img src="https://graba2z.ae/logo.png" alt="Graba2z" class="logo" />
+              <img src="https://res.cloudinary.com/dyyb62prf/image/upload/v1761983430/logoblue_uplb3m.webp" alt="Baytal Protien" class="logo" />
             </div>
             <div class="content">
-              <p>Thank you for choosing Graba2z!</p>
+              <p>Thank you for choosing Baytal Protien!</p>
             </div>
             <div class="footer">
               <h3>Get in Touch</h3>
-              <div class="social-icons">
-                <a href="https://facebook.com/graba2z" class="social-icon">f</a>
-                <a href="https://twitter.com/graba2z" class="social-icon">t</a>
-                <a href="https://instagram.com/graba2z" class="social-icon">@</a>
-                <a href="https://linkedin.com/company/graba2z" class="social-icon">in</a>
-              </div>
               <div class="contact-info">
-                <p><strong>This email was sent by:</strong><br>
-                <a href="mailto:order@grabatoz.ae">order@grabatoz.ae</a></p>
-                <p><strong>For any questions please send an email to:</strong><br>
-                <a href="mailto:support@grabatoz.ae">support@grabatoz.ae</a></p>
+                <p><strong>For support, contact us at:</strong><br>
+                <a href="mailto:info@baytalProtien.net">info@baytalProtien.net</a></p>
               </div>
             </div>
           </div>
@@ -1375,7 +1327,7 @@ const sendEmail = async (to, subject, html, senderType = "support") => {
 export const sendVerificationEmail = async (email, name, code) => {
   try {
     const html = getEmailTemplate("emailVerification", { name, code })
-    await sendEmail(email, "Verify Your Email - Graba2z", html, "support")
+    await sendEmail(email, "Verify Your Email - Baytal Protien", html, "support")
     return { success: true }
   } catch (error) {
     console.error("Failed to send verification email:", error)
@@ -1408,7 +1360,7 @@ export const sendOrderPlacedEmail = async (order) => {
       customerEmail,
     })
 
-    await sendEmail(customerEmail, `Order Confirmation #${orderNumber} - Graba2z`, html, "order")
+    await sendEmail(customerEmail, `Order Confirmation #${orderNumber} - Baytal Protien`, html, "order")
     console.log(`[sendOrderPlacedEmail] Confirmation email sent successfully for order ${order._id}`)
     return { success: true }
   } catch (error) {
@@ -1489,7 +1441,7 @@ export const sendOrderStatusUpdateEmail = async (order) => {
       returned: "Order Returned",
     }
 
-    const subject = `${statusMessages[normalizedStatus] || "Order Update"} #${orderNumber} - Graba2z`
+    const subject = `${statusMessages[normalizedStatus] || "Order Update"} #${orderNumber} - Baytal Protien`
     await sendEmail(customerEmail, subject, sanitizedHtml, "order")
     console.log(`[sendOrderStatusUpdateEmail] Email sent successfully for order ${order._id}`)
     return { success: true }
@@ -1503,7 +1455,7 @@ export const sendOrderStatusUpdateEmail = async (order) => {
 export const sendReviewVerificationEmail = async (email, name, code, productName, rating, comment) => {
   try {
     const html = getEmailTemplate("reviewVerification", { name, code, productName, rating, comment })
-    await sendEmail(email, "Verify Your Product Review - Graba2z", html, "support")
+    await sendEmail(email, "Verify Your Product Review - Baytal Protien", html, "support")
     return { success: true }
   } catch (error) {
     console.error("Failed to send review verification email:", error)
@@ -1518,7 +1470,7 @@ export const sendAccountDeletionEmail = async (email, name, code) => {
     const html = getEmailTemplate("accountDeletion", { name, code })
     console.log("[sendAccountDeletionEmail] Template generated, length:", html.length)
     console.log("[sendAccountDeletionEmail] Calling sendEmail with support sender")
-    const result = await sendEmail(email, "Account Deletion Verification - Graba2z", html, "support")
+    const result = await sendEmail(email, "Account Deletion Verification - Baytal Protien", html, "support")
     console.log("[sendAccountDeletionEmail] Email sent successfully:", result)
     return { success: true }
   } catch (error) {
@@ -1542,7 +1494,7 @@ export const sendNewsletterConfirmation = async (email, preferences) => {
       <p style="color: #888; font-size: 13px; margin-top: 24px;">This is an automated message. Please do not reply.</p>
     </div>
   `
-  await sendEmail(email, "Newsletter Subscription Confirmed - Graba2z", html, "support")
+  await sendEmail(email, "Newsletter Subscription Confirmed - Baytal Protien", html, "support")
 }
 
 export const sendResetPasswordEmail = async (email, name, resetLink) => {
@@ -1552,12 +1504,12 @@ export const sendResetPasswordEmail = async (email, name, resetLink) => {
         <h2 style="color: #2c3e50;">Reset Your Password</h2>
         <p>Hi ${name || "User"},</p>
         <p>We received a request to reset your password. Click the button below to set a new password. This link is valid for 60 minutes.</p>
-        <a href="${resetLink}" style="display: inline-block; margin: 24px 0; padding: 12px 24px; background: #84cc16; color: #fff; border-radius: 4px; text-decoration: none; font-weight: bold;">Reset Password</a>
+        <a href="${resetLink}" style="display: inline-block; margin: 24px 0; padding: 12px 24px; background: #2377c1; color: #fff; border-radius: 4px; text-decoration: none; font-weight: bold;">Reset Password</a>
         <p>If you did not request this, you can safely ignore this email.</p>
-        <p style="color: #888; font-size: 12px; margin-top: 32px;">&copy; ${new Date().getFullYear()} Graba2z</p>
+        <p style="color: #888; font-size: 12px; margin-top: 32px;">&copy; ${new Date().getFullYear()} Baytal Protien</p>
       </div>
     `
-    await sendEmail(email, "Reset Your Password - Graba2z", html, "support")
+    await sendEmail(email, "Reset Your Password - Baytal Protien", html, "support")
     return { success: true }
   } catch (error) {
     console.error("Failed to send reset password email:", error)

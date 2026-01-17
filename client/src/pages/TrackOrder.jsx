@@ -146,7 +146,7 @@ const TrackOrder = () => {
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="Enter your email address"
                   required
                 />
@@ -158,7 +158,7 @@ const TrackOrder = () => {
                   name="orderId"
                   value={formData.orderId}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="Enter your order ID"
                   required
                 />
@@ -203,22 +203,22 @@ const TrackOrder = () => {
 
         {/* Order Details */}
         {orderData && (
-          <div className="space-y-6 overflow-x-auto">
+          <div className="space-y-6">
             {/* Order Summary */}
-            <div className="bg-white rounded-lg shadow-md p-6 min-w-0 w-full">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-xl font-bold text-gray-900">Order Details</h2>
-                <div className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(orderData.status)}`}>
+            <div className="bg-white rounded-lg shadow-md p-4 md:p-6 min-w-0 w-full">
+              <div className="flex items-center justify-between mb-4 gap-2 flex-wrap">
+                <h2 className="text-lg md:text-xl font-bold text-gray-900">Order Details</h2>
+                <div className={`px-3 py-1 rounded-full text-xs md:text-sm font-medium ${getStatusColor(orderData.status)}`}>
                   {orderData.status}
                 </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 min-w-0 w-full">
                 <div>
-                  <h3 className="font-semibold text-gray-900 mb-2">Order Information</h3>
-                  <div className="space-y-1 text-sm">
-                    <p>
-                      <span className="font-medium">Order ID:</span> {orderData._id}
+                  <h3 className="text-sm md:text-base font-semibold text-gray-900 mb-2">Order Information</h3>
+                  <div className="space-y-1 text-xs md:text-sm break-all">
+                    <p className="break-all">
+                      <span className="font-medium">Order ID:</span> {formData.orderId}
                     </p>
                     <p>
                       <span className="font-medium">Order Date:</span>{" "}
@@ -236,8 +236,8 @@ const TrackOrder = () => {
                 </div>
 
                 <div>
-                  <h3 className="font-semibold text-gray-900 mb-2">Shipping Address</h3>
-                  <div className="text-sm text-gray-600">
+                  <h3 className="text-sm md:text-base font-semibold text-gray-900 mb-2">Shipping Address</h3>
+                  <div className="text-xs md:text-sm text-gray-600">
                     {orderData.shippingAddress ? (
                       <>
                         <p>{orderData.shippingAddress.name}</p>
@@ -257,31 +257,32 @@ const TrackOrder = () => {
             </div>
 
             {/* Tracking Progress */}
-            <div className="bg-white rounded-lg shadow-md p-6 overflow-x-auto relative">
-              <h2 className="text-xl font-bold text-gray-900 mb-6">Order Progress</h2>
+            <div className="bg-white rounded-lg shadow-md p-4 md:p-6 relative">
+              <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-4 md:mb-6">Order Progress</h2>
 
-              <div className="flex items-center justify-between mb-8 min-w-0 w-full">
+              <div className="overflow-x-auto pb-2">
+                <div className="flex items-center justify-between mb-6 md:mb-8 min-w-max md:min-w-0 px-2">
                 {getTrackingSteps(orderData.status).map((step, index) => (
-                  <div key={index} className="flex flex-col items-center flex-1 min-w-0">
+                  <div key={index} className="flex flex-col items-center flex-1 min-w-[70px] md:min-w-0 px-1">
                     <div
-                      className={`w-10 h-10 rounded-full flex items-center justify-center mb-2 ${
+                      className={`w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center mb-1 md:mb-2 ${
                         step.status === "completed"
-                          ? "bg-green-500 text-white"
+                          ? "bg-blue-500 text-white"
                           : step.status === "current"
-                            ? "bg-blue-500 text-white"
+                            ? "bg-blue-600 text-white"
                             : "bg-gray-200 text-gray-500"
                       }`}
                     >
                       {step.status === "completed" ? (
-                        <CheckCircle size={20} />
+                        <CheckCircle className="w-4 h-4 md:w-5 md:h-5" />
                       ) : step.status === "current" ? (
-                        <Clock size={20} />
+                        <Clock className="w-4 h-4 md:w-5 md:h-5" />
                       ) : (
-                        <div className="w-3 h-3 rounded-full bg-current"></div>
+                        <div className="w-2 h-2 md:w-3 md:h-3 rounded-full bg-current"></div>
                       )}
                     </div>
                     <span
-                      className={`text-xs text-center ${
+                      className={`text-[10px] md:text-xs text-center leading-tight ${
                         step.status === "completed" || step.status === "current"
                           ? "text-gray-900 font-medium"
                           : "text-gray-500"
@@ -292,21 +293,22 @@ const TrackOrder = () => {
                     {index < getTrackingSteps(orderData.status).length - 1 && (
                       <div
                         className={`hidden md:block absolute h-0.5 w-full top-5 left-1/2 transform -translate-y-1/2 ${
-                          step.status === "completed" ? "bg-green-500" : "bg-gray-200"
+                          step.status === "completed" ? "bg-blue-500" : "bg-gray-200"
                         }`}
                         style={{ zIndex: -1 }}
                       ></div>
                     )}
                   </div>
                 ))}
+                </div>
               </div>
 
-              <div className="text-center">
-                <div className="flex items-center justify-center mb-2">
+              <div className="text-center px-2">
+                <div className="flex items-center justify-center mb-2 flex-wrap gap-1">
                   {getStatusIcon(orderData.status)}
-                  <span className="ml-2 text-lg font-semibold text-gray-900">Current Status: {orderData.status}</span>
+                  <span className="ml-1 text-sm md:text-lg font-semibold text-gray-900">Current Status: {orderData.status}</span>
                 </div>
-                <p className="text-gray-600 text-sm">
+                <p className="text-gray-600 text-xs md:text-sm">
                   {orderData.status.toLowerCase().includes("delivered")
                     ? "Your order has been delivered successfully!"
                     : orderData.status.toLowerCase().includes("shipped") ||
@@ -320,32 +322,32 @@ const TrackOrder = () => {
             </div>
 
             {/* Order Items */}
-            <div className="bg-white rounded-lg shadow-md p-6 min-w-0 w-full">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">Order Items</h2>
-              <div className="space-y-4">
+            <div className="bg-white rounded-lg shadow-md p-4 md:p-6 min-w-0 w-full">
+              <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-3 md:mb-4">Order Items</h2>
+              <div className="space-y-3 md:space-y-4">
                 {orderData.orderItems.filter(item => !item.isProtection).map((item, index) => {
                   console.log('Order item:', item);
                   const price = Number(item.price) || 0;
                   const qty = Number(item.quantity) || 0;
                   const total = price * qty;
                   return (
-                    <div key={index} className="flex items-center space-x-4 p-4 border border-gray-200 rounded-lg min-w-0 w-full">
-                      <div className="relative">
+                    <div key={index} className="flex items-center space-x-2 md:space-x-4 p-3 md:p-4 border border-gray-200 rounded-lg min-w-0 w-full">
+                      <div className="relative flex-shrink-0">
                         <img
                           src={getFullImageUrl(item.image) || "/placeholder.svg?height=80&width=80"}
                           alt={item.name}
-                          className="w-20 h-20 object-contain rounded"
+                          className="w-16 h-16 md:w-20 md:h-20 object-contain rounded"
                         />
-                        <span className="absolute bottom-1 right-1 bg-lime-500 text-white text-xs px-2 py-0.5 rounded-full">
+                        <span className="absolute bottom-0 right-0 bg-blue-500 text-white text-[10px] md:text-xs px-1.5 md:px-2 py-0.5 rounded-full">
                           Qty: {item.quantity}
                         </span>
                       </div>
                       <div className="flex-1 min-w-0">
-                        <h3 className="font-medium text-gray-900">{item.name}</h3>
-                        <p className="text-sm font-medium text-gray-900">{formatPrice(item.price)} each</p>
+                        <h3 className="text-sm md:text-base font-medium text-gray-900 line-clamp-2">{item.name}</h3>
+                        <p className="text-xs md:text-sm font-medium text-gray-900 mt-0.5">{formatPrice(item.price)} each</p>
                       </div>
-                      <div className="text-right">
-                        <p className="font-bold text-gray-900">{total > 0 ? formatPrice(total) : "N/A"}</p>
+                      <div className="text-right flex-shrink-0">
+                        <p className="text-sm md:text-base font-bold text-gray-900 whitespace-nowrap">{total > 0 ? formatPrice(total) : "N/A"}</p>
                       </div>
                     </div>
                   );
@@ -353,9 +355,9 @@ const TrackOrder = () => {
               </div>
 
               {orderData.orderItems.some(item => item.isProtection) && (
-                <div className="mt-6">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-3 flex items-center">
-                    <svg className="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="mt-4 md:mt-6">
+                  <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-2 md:mb-3 flex items-center">
+                    <svg className="w-4 h-4 md:w-5 md:h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                     </svg>
                     Buyer Protection Plans
@@ -364,15 +366,15 @@ const TrackOrder = () => {
                     {orderData.orderItems.filter(item => item.isProtection).map((item, index) => {
                       const price = Number(item.price) || 0;
                       return (
-                        <div key={index} className="flex items-center p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                          <svg className="w-8 h-8 mr-3 text-blue-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div key={index} className="flex items-center p-3 md:p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                          <svg className="w-6 h-6 md:w-8 md:h-8 mr-2 md:mr-3 text-blue-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                           </svg>
                           <div className="flex-1 min-w-0">
-                            <h4 className="font-medium text-gray-900">{item.name}</h4>
+                            <h4 className="text-sm md:text-base font-medium text-gray-900">{item.name}</h4>
                           </div>
-                          <div className="text-right">
-                            <p className="font-bold text-gray-900">{formatPrice(price)}</p>
+                          <div className="text-right flex-shrink-0">
+                            <p className="text-sm md:text-base font-bold text-gray-900 whitespace-nowrap">{formatPrice(price)}</p>
                           </div>
                         </div>
                       );
@@ -381,10 +383,10 @@ const TrackOrder = () => {
                 </div>
               )}
 
-              <div className="mt-6 pt-4 border-t border-gray-200">
-                <div className="flex justify-between items-center">
-                  <span className="text-lg font-bold text-gray-900">Total Amount:</span>
-                  <span className="text-lg font-bold text-green-600">{formatPrice(orderData.totalPrice)}</span>
+              <div className="mt-4 md:mt-6 pt-3 md:pt-4 border-t border-gray-200">
+                <div className="flex justify-between items-center gap-2">
+                  <span className="text-base md:text-lg font-bold text-gray-900">Total Amount:</span>
+                  <span className="text-base md:text-lg font-bold text-blue-600 whitespace-nowrap">{formatPrice(orderData.totalPrice)}</span>
                 </div>
               </div>
             </div>
