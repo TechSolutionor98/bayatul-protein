@@ -897,7 +897,7 @@ const Home = () => {
             </div>
           </div>
           <p className="text-gray-700 font-semibold text-lg">Loading...</p>
-          <p className="text-gray-500 text-sm">Please wait while we fetch your data</p>
+          {/* <p className="text-gray-500 text-sm">Please wait while we fetch your data</p> */}
         </div>
       </div>
     )
