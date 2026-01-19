@@ -64,6 +64,7 @@ import bulkPurchaseRoutes from "./routes/bulkPurchaseRoutes.js"
 import buyerProtectionRoutes from "./routes/buyerProtectionRoutes.js"
 import cacheRoutes from "./routes/cacheRoutes.js"
 import customSliderItemRoutes from "./routes/customSliderItemRoutes.js"
+import upgradeFeatureRoutes from "./routes/upgradeFeatureRoutes.js"
 
 dotenv.config()
 
@@ -156,6 +157,7 @@ app.use("/api/redirects", redirectRoutes)
 app.use("/api/buyer-protection", buyerProtectionRoutes)
 app.use("/api/cache", cacheRoutes)
 app.use("/api/custom-slider-items", customSliderItemRoutes)
+app.use("/api/upgrade-features", upgradeFeatureRoutes)
 // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 
