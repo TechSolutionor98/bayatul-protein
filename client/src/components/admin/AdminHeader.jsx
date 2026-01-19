@@ -13,7 +13,7 @@ const AdminHeader = () => {
 
   const handleLogout = () => {
     adminLogout()
-    navigate("/grabiansadmin/login")
+    navigate("/baytalprotien-admin/login")
   }
 
   // Get page title based on current route

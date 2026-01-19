@@ -199,7 +199,7 @@ const AdminSidebar = () => {
 
   const handleLogout = () => {
     adminLogout()
-    navigate("/grabiansadmin/login")
+    navigate("/baytalprotien-admin/login")
   }
 
   const toggleDropdown = (dropdown, e) => {

@@ -10,7 +10,7 @@ const RedirectHandler = () => {
   useEffect(() => {
     const checkRedirect = async () => {
       // Don't check admin routes
-      if (location.pathname.startsWith('/admin') || location.pathname.startsWith('/grabiansadmin')) {
+      if (location.pathname.startsWith('/admin') || location.pathname.startsWith('/baytalprotien-admin')) {
         setChecked(true)
         return
       }

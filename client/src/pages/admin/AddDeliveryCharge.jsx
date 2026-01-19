@@ -99,7 +99,7 @@ const AddDeliveryCharge = () => {
         localStorage.getItem("adminToken") || localStorage.getItem("token") || localStorage.getItem("authToken")
       if (!token) {
         showToast("Please login as admin first", "error")
-        navigate("/grabiansadmin/login")
+        navigate("/baytalprotien-admin/login")
         return
       }
       const deliveryChargeData = {
