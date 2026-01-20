@@ -4,6 +4,11 @@ import { CartProvider } from "./context/CartContext"
 import { WishlistProvider } from "./context/WishlistContext"
 import { ToastProvider } from "./context/ToastContext"
 
+
+
+
+
+
 // Import components
 import Layout from "./components/Layout"
 import ProtectedRoute from "./components/ProtectedRoute"
