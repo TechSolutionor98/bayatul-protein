@@ -35,9 +35,8 @@ const AdminBanners = () => {
 
   const positions = [
     { value: "hero", label: "Hero Section" },
-    { value: "category", label: "Category Section" },
-    { value: "promotional", label: "Promotional Section" },
-    { value: "footer", label: "Footer Section" },
+    { value: "homepage-top", label: "Homepage - Premium Products (Bottom)" },
+    { value: "homepage-middle", label: "Homepage - Featured Slider (Bottom)" },
   ]
 
   useEffect(() => {

@@ -25,6 +25,7 @@ import {
 } from "lucide-react"
 import { Link, useNavigate } from "react-router-dom"
 import BannerSlider from "../components/BannerSlider"
+import HomepageBanner from "../components/HomepageBanner"
 import CategorySlider from "../components/CategorySlider"
 import CategorySliderUpdated from "../components/CategorySliderUpdated"
 import { useWishlist } from "../context/WishlistContext"
@@ -53,6 +54,8 @@ const Home = () => {
   const [banners, setBanners] = useState([])
   const [heroBanners, setHeroBanners] = useState([])
   const [mobileBanners, setMobileBanners] = useState([])
+  const [homepageTopBanners, setHomepageTopBanners] = useState([])
+  const [homepageMiddleBanners, setHomepageMiddleBanners] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [currentSlide, setCurrentSlide] = useState(0)
@@ -275,6 +278,12 @@ const Home = () => {
         console.log("Hero Banners:", heroData)
         const promotionalBanners = bannersData.filter((banner) => banner.position === "promotional")
         const mobileData = bannersData.filter((banner) => banner.position === "mobile")
+        
+        // Filter homepage banners for different sections
+        const homepageTopData = bannersData.filter((banner) => banner.position === "homepage-top")
+        const homepageMiddleData = bannersData.filter((banner) => banner.position === "homepage-middle")
+        console.log("Homepage Top Banners:", homepageTopData)
+        console.log("Homepage Middle Banners:", homepageMiddleData)
 
         // Filter featured products and sort by stock status (in-stock first)
         const featured = products
@@ -637,6 +646,8 @@ const Home = () => {
         setBanners(promotionalBanners)
         setHeroBanners(heroData)
         setMobileBanners(mobileData)
+        setHomepageTopBanners(homepageTopData)
+        setHomepageMiddleBanners(homepageMiddleData)
         // Add log after setting hero banners
         console.log("[DEBUG] deviceType:", deviceType)
         console.log("[DEBUG] heroBanners:", heroData)
@@ -1039,7 +1050,7 @@ const Home = () => {
       {/* Categories Section - Admin Controlled Slider */}
       <CategorySliderUpdated onCategoryClick={handleCategoryClick} />
 
-     
+    
       {/* Three Cards Section - Simple Mobile Grid */}
       <div className="m-3">
        
@@ -1104,13 +1115,23 @@ const Home = () => {
       <BigSaleSection products={featuredProducts} />
       
     
-      
+        {/* Homepage Top Banner - Premium Products Section */}
+      {homepageTopBanners.length > 0 && (
+        <div className="mx-3 md:mx-8 my-4 max-h-[120px] md:max-h-[280px] overflow-hidden">
+          <HomepageBanner 
+            banners={homepageTopBanners.filter(
+              (banner) => banner.deviceType && banner.deviceType.toLowerCase() === deviceType.toLowerCase()
+            )} 
+          />
+        </div>
+      )}
+     
   
        {/* Dynamic Section Position 1 */}
       {renderDynamicSection(1)}
-      <div className="mx-8 my-4">
+      {/* <div className="mx-8 my-4">
         <img src="/Untitled-design-6.svg" alt="image" className="w-full h-auto rounded-lg" />
-      </div>
+      </div> */}
       {/* Random Products Section */}
       <RandomProducts />
 
@@ -1673,6 +1694,9 @@ const Home = () => {
       {/* {renderDynamicSection(9)} */}
         {/* Dynamic Section Position 8 */}
      {/* {renderDynamicSection(8)} */}
+      
+     
+      
       {/* Featured Brands Section - Use BrandSlider component */}
       {(brands.length > 0 || categories.length > 0) && (
         <BrandSlider 
@@ -1683,7 +1707,16 @@ const Home = () => {
         />
       )}
 
-
+ {/* Homepage Middle Banner - Featured Slider Section */}
+      {homepageMiddleBanners.length > 0 && (
+        <div className="mx-3 md:mx-8 my-4 max-h-[120px] md:max-h-[280px] overflow-hidden">
+          <HomepageBanner 
+            banners={homepageMiddleBanners.filter(
+              (banner) => banner.deviceType && banner.deviceType.toLowerCase() === deviceType.toLowerCase()
+            )} 
+          />
+        </div>
+      )}
 
   {/* Featured Product Showcase Section */}
       <FeaturedProductShowcase products={featuredProducts.slice(0, 6)} />

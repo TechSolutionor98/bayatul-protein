@@ -30,7 +30,7 @@ const bannerSchema = mongoose.Schema(
     position: {
       type: String,
       required: true,
-      enum: ["hero", "category", "promotional", "footer"],
+      enum: ["hero", "homepage-top", "homepage-middle"],
       default: "hero",
     },
     category: {
